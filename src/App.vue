@@ -40,6 +40,9 @@ export default {
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+page{
+  background-color: #F4F2F2
+}
 /* this rule will be remove */
 * {
   transition: width 2s;
