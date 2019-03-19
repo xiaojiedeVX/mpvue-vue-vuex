@@ -25,9 +25,38 @@
         <div class="text">生鲜供应</div>
         <div class="line"></div>
     </div>
+    <div v-for="(img,index) in vetablesUrl" :key="index">
+      <div class="cu-card case">
+      <div class="cu-item shadow">
+        <div class='image'>
+          <image :src="img" mode="widthFix"></image>
+          <!-- <div class="cu-tag bg-blue">泉涌大大白菜</div> -->
+          <div class='cu-bar bg-shadeBottom'>泉涌大白菜是怎么怎么的好</div>
+        </div>
+        <div class="cu-list menu menu-avatar">
+          <div class="cu-item" style="padding-left:15rpx">
+            <!-- <div class="cu-avatar round lg" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></div> -->
+            <div class='content flex-sub'>
+              <div class='text-grey'>泉涌大大白菜</div>
+              <div class='text-gray text-sm flex justify-between'>
+                2018-08-19
+                <div class="text-gray text-sm">
+                  <text class="icon-attentionfill"></text> 10
+                  <text class="icon-appreciatefill"></text> 20
+                  <!-- <text class="icon-messagefill"></text> 30 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
     <div class="ve_item">
        <div class="fo_item" v-for="(img,index) in vetablesUrl" :key="index">
-        <img :src="img" alt="" style="width:97%;height:380rpx;padding:10rpx">
+         <div class="jus_center">
+           <img :src="img" alt="" style="width:100%;height:380rpx;padding:10rpx">
+         </div>
         <div class="food_name">大白菜</div>
       </div>
     </div>
@@ -100,18 +129,22 @@ export default {
 .box_item{
   display: flex;
   align-items: center;
-  width: 98%;
-  margin: 0 auto;
+  width: 100%;
+  justify-content: center;
+}
+.jus_center{
+  display: flex;
+  justify-content: center
 }
 .line{
-  height: 1rpx;
+  height: 2rpx;
   background-color: #AAAAAA;
-  width: 39vw;
+  width: 35vw;
 }
 .text{
   color: #AAAAAA;
   font-size: 28rpx;
-  width: 15vw;
+  width: 20vw;
   padding: 0 15rpx
 }
 .img_item{

@@ -10,7 +10,9 @@
             </div>
           </div>
           <div class="food_name" v-text="item"></div>
-          <img src="http://sowcar.com/t6/686/1552984398x986907142.jpg" style="width:97%;height:360rpx;padding:10rpx" alt="">
+          <div class="jus_center">
+             <img src="http://sowcar.com/t6/686/1552984398x986907142.jpg" style="width:100%;height:360rpx;padding:10rpx" alt="">
+          </div>
           <div class="fl_right">
             <div></div>
              <div style="font-size:24rpx;color:#0079f3;padding:10rpx">330阅读</div>
@@ -81,7 +83,11 @@ export default {
   padding:10rpx;
   font-size:30rpx;
   border-bottom:1rpx solid #ccc;
-
+  margin: 0rpx 10rpx
+}
+.jus_center{
+  display: flex;
+  justify-content: center
 }
 
 </style>

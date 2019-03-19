@@ -85,8 +85,8 @@ export default {
   /* background-color: white; */
 }
 .logo {
-  width: 400rpx;
-  height: 400rpx;
+  width: 350rpx;
+  height: 350rpx;
 }
 .text_center {
   text-align: center;
