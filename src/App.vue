@@ -1,4 +1,5 @@
 <script>
+import "/static/vant/common/index.wxss";
 export default {
   created () {
     // 调用API从本地缓存中获取数据
@@ -41,7 +42,8 @@ export default {
   box-sizing: border-box;
 }
 page{
-  background-color: #F4F2F2
+  background-color: #F4F2F2;
+  font-size: 35rpx
 }
 /* this rule will be remove */
 * {
@@ -49,5 +51,10 @@ page{
   -moz-transition: width 2s;
   -webkit-transition: width 2s;
   -o-transition: width 2s;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 </style>

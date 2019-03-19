@@ -1,0 +1,143 @@
+<template>
+  <div>
+    <div>
+       <swiper
+      :indicator-dots="indicatorDots"
+      :autoplay="autoplay"
+      :interval="interval"
+      :duration="duration"
+      >
+      <block v-for="(img,index) in imgUrls" :key="index" >
+        <swiper-item>
+          <image :src="img" class="slide-image" style="width:100%;height:50vw"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    </div>
+    <div class="img_content">
+      <div v-for="(item,index) in foodUrls" :key="index">
+        <img :src="item" class="img_item" alt="">
+      </div>
+    </div>
+ 
+    <div class="box_item">
+        <div class="line"></div>
+        <div class="text">生鲜供应</div>
+        <div class="line"></div>
+    </div>
+    <div class="ve_item">
+       <div class="fo_item" v-for="(img,index) in vetablesUrl" :key="index">
+        <img :src="img" alt="" style="width:97%;height:380rpx;padding:10rpx">
+        <div class="food_name">大白菜</div>
+      </div>
+    </div>
+    <!-- <div class="ve_item">
+      <div class="fo_item" v-for="(img,index) in vetablesUrl" :key="index">
+        <img :src="img" alt="" style="width:94vw;height:400rpx">
+        <div>大白菜</div>
+      </div>
+    </div> -->
+
+  </div>
+</template>
+
+<script>
+
+export default {
+  data() {
+    return {
+      active: 0,
+      imgUrls: [
+      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
+      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+    ],
+    foodUrls:[
+      'http://sowcar.com/t6/686/1552985855x986907160.jpg',
+      'http://sowcar.com/t6/686/1552982484x986907160.jpg',
+      'http://sowcar.com/t6/686/1552985881x986907160.jpg',
+      'http://sowcar.com/t6/686/1552985921x986907160.jpg',
+      'http://sowcar.com/t6/686/1552982484x986907160.jpg',
+      'http://sowcar.com/t6/686/1552982484x986907160.jpg',
+    ],
+    vetablesUrl:[
+      'http://sowcar.com/t6/686/1552981748x986907160.jpg',
+      'http://sowcar.com/t6/686/1552984398x986907142.jpg',
+      'http://sowcar.com/t6/686/1552984423x986907142.jpg',
+      'http://sowcar.com/t6/686/1552984440x986907142.jpg',
+      'http://sowcar.com/t6/686/1552981748x986907160.jpg',
+      'http://sowcar.com/t6/686/1552981748x986907160.jpg',
+    ],
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000
+    };
+  },
+
+
+  methods: {
+    onChange(e) {
+      const url = "../food/main";
+      if (e.mp.detail == 1) {
+        console.log(e.mp.detail);
+        mpvue.switchTab({ url });
+      }
+    },
+    clickHandle(ev) {
+      console.log("clickHandle:", ev);
+      // throw {message: 'custom test'}
+    }
+  },
+
+  created() {
+    // let app = getApp();
+  }
+};
+</script>
+
+<style scoped>
+.box_item{
+  display: flex;
+  align-items: center;
+  width: 98%;
+  margin: 0 auto;
+}
+.line{
+  height: 1rpx;
+  background-color: #AAAAAA;
+  width: 39vw;
+}
+.text{
+  color: #AAAAAA;
+  font-size: 28rpx;
+  width: 15vw;
+  padding: 0 15rpx
+}
+.img_item{
+  width: 20vw;
+  height: 19vw;
+    padding: 15rpx;
+}
+.img_content{
+  display: flex;
+  overflow-x: scroll;
+  padding: 10rpx;
+  margin: 10rpx;
+  background-color: white
+}
+.ve_item{
+  width: 94vw;
+  min-height: 400rpx; 
+  margin: 0 auto
+}
+.fo_item{
+    background-color: white;
+    margin: 20rpx 0;
+    box-shadow: 1rpx 1rpx 1rpx 1rpx #CCCCCC;
+}
+.food_name{
+  font-size: 28rpx;
+  padding: 20rpx 15rpx; 
+}
+</style>
