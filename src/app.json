@@ -5,7 +5,9 @@
     "pages/recipe/main",
     "pages/message/main",
     "pages/user/main",
-    "pages/counter/main"
+    "pages/counter/main",
+    "pages/dishDetail/main",
+    "pages/recipeDetail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

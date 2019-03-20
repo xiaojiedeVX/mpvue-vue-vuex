@@ -2531,7 +2531,7 @@ scroll-view.cu-steps .cu-item {
   height: 0px;
   width: calc(100% - 80rpx);
   border-bottom: 1px solid #ccc;
-  left: calc(0px - (100% - 80rpx) / 2);
+  left: calc(0rpx - (100% - 80rpx) / 2);
   top: 40rpx;
   z-index: 0;
 }

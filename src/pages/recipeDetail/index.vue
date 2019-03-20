@@ -1,37 +1,36 @@
 <template>
   <div>
       <div>
-          <div class="title">*菜谱推荐为每日提供的菜品，互相组合，煎、炸、烹、炒后的成菜</div>
-          <div class="clock">12:00</div>
-      </div>
-
-      <div v-for="(item,index) in data" :key="index" @click="gotoDetail">
           <div class="content_s">
           <div class="pa_t">
-            <span class="cu-tag bg-cyan radius">推荐{{index+1}}</span>
-            <span class="title_text" v-text="item.name"></span>
-          </div>
-           <div  class="pa_title white_spa">
-            <span class="font_24">材料:</span>
-            <span class="font_24 color_aaa pal_5" v-text="item.title"></span>
-          </div>
-          <div class="jus_center">
-            <img :src="item.imgUrl" alt="" style="width:100%;height:360rpx;padding:10rpx">
-          </div>
-          <div class="bottom">
-            <div></div>
-            <div style="padding:10rpx;align-items:center;display:flex">
-               <view class="cu-capsule round" style="padding-right:5rpx"> 
-                  <view class='cu-tag bg-grey '>
-                    <text class='icon-likefill'></text>
-                  </view>
-                  <view class="cu-tag line-blue">
-                    {{item.readerNum}}阅读
-                  </view>
-                </view>
-              <!-- <span style="font-size:24rpx;color:#0079f3">{{item.readerNum}}阅读</span>
-              <van-icon custom-class="btom" name="like-o" /> -->
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <span class="cu-tag bg-cyan radius">推荐</span>
+                <span class="title_text" >红烧肉</span>
+              </div>
+              <div>
+                <text class='icon-likefill  text-red'></text>
+              </div>
             </div>
+          </div>
+          <div class="cu-bar">
+            <div class='action'>
+              <text class='icon-title text-blue'></text>材料
+            </div>
+          </div>
+          <div class='padding bg-white'>
+            <div class='text-left padding'>主料：五花猪肉（什么是五花猪肉？就是那种一层肥的一层瘦的肉，层数越多越好。俗话说要吃肉肥中瘦嘛！）2斤（不要太少否则做不出好吃的红烧肉！），
+调料：盐，糖（最好是冰糖末），葱段，姜片，料酒（至于用量除了糖要3大匙外其他主要看个人口味）</div>
+          </div>
+           <div class="cu-bar margin-top">
+            <div class='action'>
+              <text class='icon-title text-blue'></text>做法
+            </div>
+          </div>
+          <div class='padding bg-white' style="padding-bottom:30rpx">
+            <div class='text-left padding'>1.肉洗净后切成方块，放在加了料酒的冷水里浸泡5分钟。捞出沥干水。</div>
+            <div class='text-left padding'>2.热锅凉油，待油轻微帽烟将冰糖加入并不停搅拌，你会发现开始晶莹的冰糖会变的象白糖，然后象黄糖，然后象红塘然后象……没有然后了！赶快加肉否则糖就糊了！你的铲子别停呀！继续搅拌！糖会挂在肉上很不均匀，别管它继续搅你的。这时糖会因为加热的原因均匀的挂在肉上。</div>
+            <div class='text-left padding'>3.现在加水吧！末过肉即可，还有葱段姜片。大火烧开，改小火煮半个小时。</div>
           </div>
         </div>
       </div>
@@ -93,10 +92,6 @@ export default {
     clickHandle(ev) {
       console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
-    },
-    gotoDetail(){
-      const url = "../recipeDetail/main";
-      mpvue.navigateTo({url})
     }
   },
 
@@ -111,6 +106,9 @@ export default {
 .jus_center{
   display: flex;
   justify-content: center
+}
+.padding{
+  padding: 0 30rpx
 }
 
 .title{
@@ -132,7 +130,7 @@ export default {
   width: 94vw;
   margin: 30rpx auto;
   background-color: white;
-  min-height: 540rpx;
+  min-height: 60vh;
 }
 .box_title{
   padding: 4rpx 25rpx;

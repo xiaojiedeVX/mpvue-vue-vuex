@@ -44,7 +44,7 @@
         ></div>
         <div class="content">
           <div>鲜直达互动群</div>
-          <div class="text-gray text-sm">老大：三年上市</div>
+          <div class="text-gray text-sm">老总：三年上市</div>
         </div>
         <div class="action">
           <div class="text-grey text-xs">22:20</div>
@@ -58,7 +58,7 @@
         ></div>
         <div class="content">
           <div>内部群</div>
-          <div class="text-gray text-sm">各位老总：明天涨工资</div>
+          <div class="text-gray text-sm">老大：明天给大家涨工资</div>
         </div>
         <div class="action">
           <div class="text-grey text-xs">22:20</div>

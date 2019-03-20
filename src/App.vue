@@ -26,6 +26,10 @@ export default {
   },
   log () {
     console.log(`log at:${Date.now()}`)
+  },
+  getSysInfo() {
+    const res = wx.getSystemInfoSync()
+    return res
   }
 }
 </script>

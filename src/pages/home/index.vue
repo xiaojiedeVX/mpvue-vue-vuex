@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
+      <div class="cu-bar fixed bg-gradual-blue" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">首页
+        </navigator>
+      </div>
+    </div>
     <div>
        <swiper
       :indicator-dots="indicatorDots"
@@ -16,7 +22,7 @@
     </div>
     <div class="img_content">
       <div v-for="(item,index) in foodUrls" :key="index">
-        <img :src="item" class="img_item" alt="">
+        <img @click="gotoDetails" :src="item" class="img_item" alt="">
       </div>
     </div>
  
@@ -71,8 +77,10 @@
 </template>
 
 <script>
-
+import app from "../../App";
+const datas = app.getSysInfo();
 export default {
+  
   data() {
     return {
       active: 0,
@@ -90,7 +98,6 @@ export default {
       'http://sowcar.com/t6/686/1552982484x986907160.jpg',
     ],
     vetablesUrl:[
-      'http://sowcar.com/t6/686/1552981748x986907160.jpg',
       'http://sowcar.com/t6/686/1552984398x986907142.jpg',
       'http://sowcar.com/t6/686/1552984423x986907142.jpg',
       'http://sowcar.com/t6/686/1552984440x986907142.jpg',
@@ -100,10 +107,29 @@ export default {
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
-    duration: 1000
+    duration: 1000,
+    navBarHeight:0,
+    statusBarHeight:0
     };
   },
 
+  created(){
+    console.log(datas)
+    let platformReg = /ios/i;
+    let height = 0;
+    if (platformReg.test(datas.platform)) {
+      height = 44;
+    } else {
+      height = 48;
+    }
+    this.navBarHeight = datas.statusBarHeight + height;
+    this.statusBarHeight = datas.statusBarHeight
+    // console.log(this)
+  },
+
+  beforeCreate() {
+   
+ },
 
   methods: {
     onChange(e) {
@@ -116,12 +142,13 @@ export default {
     clickHandle(ev) {
       console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
+    },
+    gotoDetails(){
+      const url = "../dishDetail/main";
+      mpvue.navigateTo({ url })
     }
   },
 
-  created() {
-    // let app = getApp();
-  }
 };
 </script>
 
