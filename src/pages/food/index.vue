@@ -1,6 +1,12 @@
 <template>
   <div @click="hideModal">
-      <div class="top_search top_fixed" >
+     <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
+      <div class="cu-bar fixed bg-gradual-blue" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}">
+        <div class='action' hover-class="none"  style="margi-left:30rpx">食材供应
+        </div>
+      </div>
+    </div>
+      <div class="top_search top_fixed" :style="{top:navBarHeight+'px'}">
          <div class="cu-bar bg-cyan search">
         <!-- <div class="cu-avatar round" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></div> -->
           <div class='search-form radius'>
@@ -13,26 +19,26 @@
           </div>
         </div>
       </div>
-      <view :class="modaShow?showModalClass:hideModalClass">
-        <view class="cu-dialog basis-lg" catchtap >
-          <view class="cu-list menu menu-avatar text-left" >
-            <view class="cu-item arrow" style="padding-left:30rpx" @click='hideModal'>
-              <view class='content'>
+      <div :style="{top:navBarHeight + 'px'}" :class="['cu-modal','drawer-modal','justify-end',{'show':modaShow==true}]">
+        <div class="cu-dialog basis-lg" catchtap >
+          <div class="cu-list menu menu-avatar text-left" >
+            <div class="cu-item arrow" style="padding-left:30rpx" @click='hideModal'>
+              <div class='content'>
                 <text class='icon-circlefill text-grey'></text>
                 <text class='text-grey'>2018-03-19</text>
-              </view>
-            </view>
-            <view class="cu-item arrow" style="padding-left:30rpx" @click='hideModal'>
-              <view class='content'>
+              </div>
+            </div>
+            <div class="cu-item arrow" style="padding-left:30rpx" @click='hideModal'>
+              <div class='content'>
                 <text class='icon-circlefill text-grey'></text>
                 <text class='text-grey'>2018-03-19</text>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <div style="margin-top:10vh">
-        <div v-for="(item,index) in data" :key="index" @click="gotoDetail">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div :style="{marginTop:navBarHeight + 'px'}">
+        <div v-for="(item,index) in data" :key="index" @click="gotoDetail" style="margin-bottom:30rpx">
         <div class="content_my">
           <div class="card_top">
             <img src="http://sowcar.com/t6/686/1552982484x986907160.jpg" alt="" style="width:80rpx;height:80rpx;border-radius:50%;margin:10rpx">
@@ -57,7 +63,8 @@
 
 <script>
 import card from "@/components/card";
-
+import app from "../../App";
+const datas = app.getSysInfo();
 export default {
   data() {
     return {
@@ -65,17 +72,26 @@ export default {
       data:['泉涌生鲜的大大白菜你信不','泉涌生鲜的大大白菜你信不','泉涌生鲜的大大白菜你信不'],
       showModalClass:'cu-modal,drawer-modal,justify-end,show',
       hideModalClass:'cu-modal,drawer-modal,justify-end',
-      modaShow:false
+      modaShow:false,
+      navBarHeight:0,
+      statusBarHeight:0
     };
   },
 
-  components: {
-    card
+  created(){
+    let platformReg = /ios/i;
+    let height = 0;
+    if (platformReg.test(datas.platform)) {
+      height = 44;
+    } else {
+      height = 48;
+    }
+    this.navBarHeight = datas.statusBarHeight + height;
+    this.statusBarHeight = datas.statusBarHeight
   },
 
   methods: {
     onChange(e) {
-      console.log(e.mp.detail)
       const url = "../home/main";
       if(e.mp.detail==0){
          mpvue.switchTab({ url });
@@ -92,13 +108,10 @@ export default {
       this.modaShow = true;
     },
     gotoDetail(){
-      const url ='../dish/Detail/main'
+      const url ='../dishDetail/main';
+      mpvue.navigateTo({url})
     }
   },
-
-  created() {
-    // let app = getApp()
-  }
 };
 </script>
 
@@ -111,7 +124,7 @@ export default {
 }
 
 .top_search{
-  width: 94vw;
+  width: 100vw;
   margin: 0rpx auto;
   background-color: white;
 }
@@ -146,7 +159,6 @@ export default {
   z-index: 999;
   left: 0;
   right: 0;
-  top:0;
   margin-left: auto;
   margin-right: auto;
 }

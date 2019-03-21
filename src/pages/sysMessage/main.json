@@ -2,7 +2,6 @@
     "usingComponents": {
       "van-card": "/static/vant/card/index",
        "van-tabbar": "/static/vant/tabbar/index",
-       "van-icon": "/static/vant/icon/index",
-       "ff-canvas": "/static/libs/f2-canvas/f2-canvas"
+       "van-icon": "/static/vant/icon/index"
     }
 }

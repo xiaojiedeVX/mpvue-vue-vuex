@@ -1,9 +1,8 @@
 <template>
   <div>
     <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
-      <div class="cu-bar fixed bg-gradual-blue" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}">
-        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none">首页
-        </navigator>
+      <div class="cu-bar fixed bg-gradual-blue" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px',textAlign:'center'}">
+         <div class="action"  hover-class="none"  style="margi-left:30rpx">首页</div>
       </div>
     </div>
     <div>
@@ -12,6 +11,7 @@
       :autoplay="autoplay"
       :interval="interval"
       :duration="duration"
+      style="height:50vw"
       >
       <block v-for="(img,index) in imgUrls" :key="index" >
         <swiper-item>
@@ -20,9 +20,16 @@
       </block>
     </swiper>
     </div>
+    <!-- <div>
+     <div class="tower-swiper" bindtouchmove="towerMove" bindtouchstart="towerStart" bindtouchend="towerEnd">
+      <div :class="['tower-item',{'none':item.zIndex==1}]" v-for="(item,index) in towerList" :key="index" :style="{transform: 'scale('+0.5+item.zIndex/10+')',marginLeft:item.mLeft*100-150 +'rpx',zIndex:item.zIndex}">
+        <div class='bg-img shadow-blur' :style="{backgroundImage:'url('+item.url+')'}"></div>
+      </div>
+    </div>
+    </div> -->
     <div class="img_content">
       <div v-for="(item,index) in foodUrls" :key="index">
-        <img @click="gotoDetails" :src="item" class="img_item" alt="">
+        <img @click="gotoDetails" :src="item.url" class="img_item" alt="">
       </div>
     </div>
  
@@ -84,18 +91,20 @@ export default {
   data() {
     return {
       active: 0,
+      towerList:[],
       imgUrls: [
       'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
       'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
       'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
     ],
     foodUrls:[
-      'http://sowcar.com/t6/686/1552985855x986907160.jpg',
-      'http://sowcar.com/t6/686/1552982484x986907160.jpg',
-      'http://sowcar.com/t6/686/1552985881x986907160.jpg',
-      'http://sowcar.com/t6/686/1552985921x986907160.jpg',
-      'http://sowcar.com/t6/686/1552982484x986907160.jpg',
-      'http://sowcar.com/t6/686/1552982484x986907160.jpg',
+      {id:1,url:'http://sowcar.com/t6/686/1552985855x986907160.jpg'},
+      {id:2,url:'http://sowcar.com/t6/686/1552982484x986907160.jpg',},
+      {id:3,url:'http://sowcar.com/t6/686/1552985881x986907160.jpg'},
+      {id:4,url:'http://sowcar.com/t6/686/1552985855x986907160.jpg'},
+      {id:5,url:'http://sowcar.com/t6/686/1552985921x986907160.jpg'},
+      {id:6,url:'http://sowcar.com/t6/686/1552982484x986907160.jpg'},
+      {id:7,url:'http://sowcar.com/t6/686/1552982484x986907160.jpg'},
     ],
     vetablesUrl:[
       'http://sowcar.com/t6/686/1552984398x986907142.jpg',
@@ -114,7 +123,6 @@ export default {
   },
 
   created(){
-    console.log(datas)
     let platformReg = /ios/i;
     let height = 0;
     if (platformReg.test(datas.platform)) {
@@ -124,7 +132,7 @@ export default {
     }
     this.navBarHeight = datas.statusBarHeight + height;
     this.statusBarHeight = datas.statusBarHeight
-    // console.log(this)
+    this.towerSwiper(this.foodUrls);
   },
 
   beforeCreate() {
@@ -146,7 +154,16 @@ export default {
     gotoDetails(){
       const url = "../dishDetail/main";
       mpvue.navigateTo({ url })
-    }
+    },
+    
+  towerSwiper(list) {
+    console.log(list)
+    for (let i = 0; i < list.length; i++) {
+      list[i].zIndex = parseInt(list.length / 2) + 1 - Math.abs(i - parseInt(list.length / 2))
+      list[i].mLeft = i - parseInt(list.length / 2)
+    };
+    this.towerList = list;
+  },
   },
 
 };

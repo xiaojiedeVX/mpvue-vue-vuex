@@ -1,5 +1,13 @@
 <template>
   <div>
+     <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
+      <div
+        class="cu-bar fixed bg-gradual-blue"
+        :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}"
+      >
+         <div class="action"  hover-class="none"  style="margi-left:30rpx">个人中心</div>
+      </div>
+    </div>
       <div class="cu-card dynamic no-card">
         <div class="cu-item shadow">
           <div class="cu-list menu menu-avatar" style="padding:3vh">
@@ -16,33 +24,33 @@
         </div>
       </div>
       <div class="cu-list no-card menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
-        <div class="cu-item arrow">
-          <div class='content' bindtap='CopyLink' data-link='https://github.com/weilanwl/ColorUI'>
-            <text class='icon-github text-grey'></text>
+         <div class="cu-item arrow">
+          <navigator class='content' url='../parent/main' hover-class='none'>
+              <text class='icon-friendfamous text-grey'></text>
             <text class='text-grey'>家长信息</text>
-          </div>
+          </navigator>
         </div>
         <div class="cu-item arrow">
-          <navigator class='content' url='../about/about' hover-class='none'>
-              <text class='icon-github text-grey'></text>
+          <navigator class='content' url='../student/main' hover-class='none'>
+              <text class='icon-profile text-grey'></text>
             <text class='text-grey'>学生信息</text>
           </navigator>
         </div>
         <div class="cu-item arrow">
           <navigator class='content' url='../log/log' hover-class='none'>
-            <text class='icon-formfill text-green'></text>
-            <text class='text-grey'>收藏</text>
+            <text class='icon-present text-green'></text>
+            <text class='text-grey'>菜谱收藏</text>
           </navigator>
         </div>
         <div class="cu-item arrow">
-          <div class='content' bindtap="showQrcode">
-            <text class='icon-appreciatefill text-red'></text>
-            <text class='text-grey'>设置</text>
-          </div>
+          <navigator class='content' url='../updatePw/main' hover-class='none'>
+            <text class='icon-present text-green'></text>
+            <text class='text-grey'>修改密码</text>
+          </navigator>
         </div>
-         <div class="cu-item arrow">
+         <div class="cu-item">
           <div class='content' bindtap="showQrcode">
-            <text class='icon-appreciatefill text-red'></text>
+            <text class='icon-pullup text-red'></text>
             <text class='text-grey'>版本1.0</text>
           </div>
         </div>
@@ -52,35 +60,41 @@
 
 <script>
 import card from "@/components/card";
-
+import app from "../../App";
+const datas = app.getSysInfo();
 export default {
   data() {
     return {
-      active:1
+      active:1,
+      navBarHeight: 0,
+      statusBarHeight: 0
     };
   },
 
-  components: {
-    card
+  created() {
+    let platformReg = /ios/i;
+    let height = 0;
+    if (platformReg.test(datas.platform)) {
+      height = 44;
+    } else {
+      height = 48;
+    }
+    this.navBarHeight = datas.statusBarHeight + height;
+    this.statusBarHeight = datas.statusBarHeight;
   },
 
   methods: {
     onChange(e) {
-      console.log(e.mp.detail)
       const url = "../home/main";
       if(e.mp.detail==0){
          mpvue.switchTab({ url });
       }
     },
     clickHandle(ev) {
-      console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
     }
   },
 
-  created() {
-    // let app = getApp()
-  }
 };
 </script>
 

@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
+      <div class="cu-bar fixed bg-gradual-pink" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none" >
+          <text class='icon-back'></text>
+        </navigator>
+        <div class='content' :style="{top:statusBarHeight+'px'}">菜谱详情</div>
+      </div>
+    </div>
       <div>
           <div class="content_s">
           <div class="pa_t">
@@ -39,7 +47,8 @@
 
 <script>
 import card from "@/components/card";
-
+import app from '../../App';
+const datas  =  app.getSysInfo();
 export default {
   data() {
     return {
@@ -73,31 +82,39 @@ export default {
           imgUrl:'http://sowcar.com/t6/686/1552984398x986907142.jpg',
           readerNum:'5000'
         },
-      ]
+      ],
+    navBarHeight:0,
+    statusBarHeight:0,
+    Custom:wx.getMenuButtonBoundingClientRect()
     };
   },
 
-  components: {
-    card
+  created(){
+    console.log(datas)
+    let platformReg = /ios/i;
+    let height = 0;
+    if (platformReg.test(datas.platform)) {
+      height = 44;
+    } else {
+      height = 48;
+    }
+    this.navBarHeight = datas.statusBarHeight + height;
+    this.statusBarHeight = datas.statusBarHeight
+    // console.log(this)
   },
 
   methods: {
     onChange(e) {
-      console.log(e.mp.detail)
       const url = "../home/main";
       if(e.mp.detail==0){
          mpvue.switchTab({ url });
       }
     },
     clickHandle(ev) {
-      console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
     }
   },
 
-  created() {
-    // let app = getApp()
-  }
 };
 </script>
 

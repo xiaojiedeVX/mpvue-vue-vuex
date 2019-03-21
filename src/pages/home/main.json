@@ -1,4 +1,4 @@
-{
+{   
     "usingComponents": {
       "van-card": "/static/vant/card/index",
        "van-tabbar": "/static/vant/tabbar/index",

@@ -1,23 +1,31 @@
 <template>
   <div>
+    <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
+      <div
+        class="cu-bar fixed bg-gradual-blue"
+        :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}"
+      >
+        <div class="action"  hover-class="none"  style="margi-left:30rpx">消息中心</div>
+      </div>
+    </div>
     <div class="cu-list menu menu-avatar">
-      <div class="cu-item">
+      <div class="cu-item" @click="gotoSysMessage">
         <div
           class="cu-avatar round lg"
-          style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"
+          style="background-image:url(http://sowcar.com/t6/687/1553150344x986907160.png);"
         ></div>
         <div class="content">
           <div class="text-grey">系统消息</div>
           <div class="text-gray text-sm">
-            <text class="icon-infofill text-red"></text>消息未送达
+            <text class="icon-infofill text-red"></text>有新的系统消息，点击查看
           </div>
         </div>
         <div class="action">
           <div class="text-grey text-xs">22:20</div>
-          <div class="cu-tag round bg-grey sm">5</div>
+          <div class="cu-tag round bg-red sm">5</div>
         </div>
       </div>
-      <div class="cu-item">
+      <!-- <div class="cu-item">
         <div
           class="cu-avatar round lg"
           style="background-image:url(https://image.weilanwl.com/img/square-2.jpg);"
@@ -36,7 +44,7 @@
           <div class="text-grey text-xs">22:20</div>
           <div class="icon-notice_forbid_fill text-gray"></div>
         </div>
-      </div>
+      </div> -->
       <div class="cu-item">
         <div
           class="cu-avatar radius lg"
@@ -91,35 +99,46 @@
 
 <script>
 import card from "@/components/card";
-
+import app from "../../App";
+const datas = app.getSysInfo();
 export default {
   data() {
     return {
-      active: 1
+      active: 1,
+      navBarHeight:0,
+      statusBarHeight:0
     };
   },
 
-  components: {
-    card
+  created(){
+    let platformReg = /ios/i;
+    let height = 0;
+    if (platformReg.test(datas.platform)) {
+      height = 44;
+    } else {
+      height = 48;
+    }
+    this.navBarHeight = datas.statusBarHeight + height;
+    this.statusBarHeight = datas.statusBarHeight
   },
+
 
   methods: {
     onChange(e) {
-      console.log(e.mp.detail);
       const url = "../home/main";
       if (e.mp.detail == 0) {
         mpvue.switchTab({ url });
       }
     },
     clickHandle(ev) {
-      console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
+    },
+    gotoSysMessage(){
+      const url = '../sysMessage/main';
+      mpvue.navigateTo({url})
     }
   },
 
-  created() {
-    // let app = getApp()
-  }
 };
 </script>
 

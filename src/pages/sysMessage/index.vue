@@ -1,18 +1,13 @@
 <template>
   <div>
     <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
-      <div
-        class="cu-bar fixed bg-gradual-blue"
-        :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}"
-      >
-        <navigator class="action" open-type="navigateBack" delta="1" hover-class="none">菜谱推荐</navigator>
+      <div class="cu-bar fixed bg-gradual-pink" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none" >
+          <text class='icon-back'></text>
+        </navigator>
+        <div class='content' :style="{top:statusBarHeight+'px'}">消息列表</div>
       </div>
     </div>
-    <div>
-      <div class="title">*菜谱推荐为每日提供的菜品，互相组合，煎、炸、烹、炒后的成菜</div>
-      <div class="clock">12:00</div>
-    </div>
-
     <div v-for="(item,index) in data" :key="index" @click="gotoDetail">
       <div class="content_s">
         <div class="pa_t">
@@ -86,7 +81,8 @@ export default {
         }
       ],
       navBarHeight: 0,
-      statusBarHeight: 0
+      statusBarHeight: 0,
+       Custom:wx.getMenuButtonBoundingClientRect()
     };
   },
 

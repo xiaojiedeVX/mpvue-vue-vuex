@@ -19,7 +19,7 @@
         <van-button slot="button" size="small" type="primary">验证码图片</van-button>
       </van-field>
     </div>
-    <div class="content_botton content_top">
+    <div class="content_botton content_top" @click="login">
       <van-button size="large" custom-class='button'  type='primary'>登录</van-button>
     </div>
   </div>
@@ -49,12 +49,14 @@ export default {
       this.codeImg = e.mp.detail;
     },
     async login() {
-      let data = {
-        username: this.username,
-        password: this.password,
-        codeImg: this.codeImg
-      };
-      let res = await login();
+      // let data = {
+      //   username: this.username,
+      //   password: this.password,
+      //   codeImg: this.codeImg
+      // };
+      // let res = await login();
+      const url ="../home/main";
+      mpvue.switchTab({url})
     }
   },
 
