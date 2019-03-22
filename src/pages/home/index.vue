@@ -65,14 +65,6 @@
       </div>
     </div>
     </div>
-    <div class="ve_item">
-       <div class="fo_item" v-for="(img,index) in vetablesUrl" :key="index">
-         <div class="jus_center">
-           <img :src="img" alt="" style="width:100%;height:380rpx;padding:10rpx">
-         </div>
-        <div class="food_name">大白菜</div>
-      </div>
-    </div>
     <!-- <div class="ve_item">
       <div class="fo_item" v-for="(img,index) in vetablesUrl" :key="index">
         <img :src="img" alt="" style="width:94vw;height:400rpx">
@@ -93,25 +85,25 @@ export default {
       active: 0,
       towerList:[],
       imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'
     ],
     foodUrls:[
-      {id:1,url:'http://sowcar.com/t6/686/1552985855x986907160.jpg'},
-      {id:2,url:'http://sowcar.com/t6/686/1552982484x986907160.jpg',},
-      {id:3,url:'http://sowcar.com/t6/686/1552985881x986907160.jpg'},
-      {id:4,url:'http://sowcar.com/t6/686/1552985855x986907160.jpg'},
-      {id:5,url:'http://sowcar.com/t6/686/1552985921x986907160.jpg'},
-      {id:6,url:'http://sowcar.com/t6/686/1552982484x986907160.jpg'},
-      {id:7,url:'http://sowcar.com/t6/686/1552982484x986907160.jpg'},
+      {id:1,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'},
+      {id:2,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',},
+      {id:3,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'},
+      {id:4,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'},
+      {id:5,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'},
+      {id:6,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'},
+      {id:7,url:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000'},
     ],
     vetablesUrl:[
-      'http://sowcar.com/t6/686/1552984398x986907142.jpg',
-      'http://sowcar.com/t6/686/1552984423x986907142.jpg',
-      'http://sowcar.com/t6/686/1552984440x986907142.jpg',
-      'http://sowcar.com/t6/686/1552981748x986907160.jpg',
-      'http://sowcar.com/t6/686/1552981748x986907160.jpg',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
+      'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
     ],
     indicatorDots: true,
     autoplay: true,

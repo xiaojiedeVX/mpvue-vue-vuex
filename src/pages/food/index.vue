@@ -41,7 +41,7 @@
         <div v-for="(item,index) in data" :key="index" @click="gotoDetail" style="margin-bottom:30rpx">
         <div class="content_my">
           <div class="card_top">
-            <img src="http://sowcar.com/t6/686/1552982484x986907160.jpg" alt="" style="width:80rpx;height:80rpx;border-radius:50%;margin:10rpx">
+            <img src="http://inews.gtimg.com/newsapp_bt/0/8240028973/1000" alt="" style="width:80rpx;height:80rpx;border-radius:50%;margin:10rpx">
             <div class="tilte">
                 <div style="font-size:30rpx">泉涌生鲜</div>
                 <div style="font-size:24rpx;color:#0079f3">2019-03-13</div>
@@ -49,7 +49,7 @@
           </div>
           <div class="food_name" v-text="item"></div>
           <div class="jus_center">
-             <img src="http://sowcar.com/t6/686/1552984398x986907142.jpg" style="width:100%;height:360rpx;padding:10rpx" alt="">
+             <img src="http://inews.gtimg.com/newsapp_bt/0/8240028973/1000" style="width:100%;height:360rpx;padding:10rpx" alt="">
           </div>
           <div class="fl_right">
             <div></div>

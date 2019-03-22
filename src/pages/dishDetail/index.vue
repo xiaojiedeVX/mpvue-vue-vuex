@@ -40,7 +40,7 @@
           <div class="cu-avatar-group">
             <div
               class="cu-avatar round sm"
-              style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"
+              style="background-image:url(http://inews.gtimg.com/newsapp_bt/0/8240028973/1000);"
             ></div>
           </div>
         </div>
@@ -69,9 +69,9 @@
         </div>
       </div>
       <div class="bg-white padding">
-        <div class="cu-steps">
+        <div class="cu-steps text-xs">
           <div :class="index>num?class1:class2" v-for="(item,index) in numList" :key="index">
-            <text class="num" :data-index="index+1"></text>
+            <text :class="['num',{'err':index==0}]" :data-index="index+1"></text>
             {{item.name}}
           </div>
         </div>
@@ -164,8 +164,8 @@ export default {
   data() {
     return {
       active: 1,
-      img: "http://sowcar.com/t6/686/1552984398x986907142.jpg",
-      img2: "http://sowcar.com/t6/686/1553054067x986907220.png",
+      img: "http://inews.gtimg.com/newsapp_bt/0/8240028973/1000",
+      img2: "http://inews.gtimg.com/newsapp_bt/0/8240028973/1000",
       class1: "cu-item",
       num: 0,
       class2: "cu-item text-blue",

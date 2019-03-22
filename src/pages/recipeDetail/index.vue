@@ -58,28 +58,28 @@ export default {
           id:1,
           name:'红烧肉',
           title:'主料：五花猪肉（什么是五花猪肉？就是那种一层肥的一层瘦的肉...',
-          imgUrl:'http://sowcar.com/t6/686/1552984398x986907142.jpg',
+          imgUrl:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
           readerNum:'300'
         },
         {
           id:1,
           name:'外婆家的卤肉饭',
           title:'主料：我也不知道怎么做（什么是五花猪肉？就是那种一层肥的一层瘦的肉...',
-          imgUrl:'http://sowcar.com/t6/686/1552984398x986907142.jpg',
+          imgUrl:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
           readerNum:'700'
         },
         {
           id:1,
           name:'老婆做的小火锅',
           title:'主料：吃吃吃吃就行了（什么是五花猪肉？就是那种一层肥的一层瘦的肉...',
-          imgUrl:'http://sowcar.com/t6/686/1552984398x986907142.jpg',
+          imgUrl:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
           readerNum:'20万+'
         },
         {
           id:1,
           name:'蚂蚁上树',
           title:'主料：当然是蚂蚁啦（什么是蚂蚁？就是阿里巴巴你知道吗...',
-          imgUrl:'http://sowcar.com/t6/686/1552984398x986907142.jpg',
+          imgUrl:'http://inews.gtimg.com/newsapp_bt/0/8240028973/1000',
           readerNum:'5000'
         },
       ],
