@@ -7,7 +7,8 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-	count: 1, // 当前数值
+	count: 1, // 当前数值,
+	recipeList:[]
 }
 
 export default new Vuex.Store({

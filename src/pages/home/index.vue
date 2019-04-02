@@ -135,7 +135,6 @@ export default {
     onChange(e) {
       const url = "../food/main";
       if (e.mp.detail == 1) {
-        console.log(e.mp.detail);
         mpvue.switchTab({ url });
       }
     },
@@ -149,7 +148,6 @@ export default {
     },
     
   towerSwiper(list) {
-    console.log(list)
     for (let i = 0; i < list.length; i++) {
       list[i].zIndex = parseInt(list.length / 2) + 1 - Math.abs(i - parseInt(list.length / 2))
       list[i].mLeft = i - parseInt(list.length / 2)

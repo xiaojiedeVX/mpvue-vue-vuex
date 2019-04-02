@@ -1,6 +1,6 @@
 {
   "pages": [
-
+    "pages/index/main",
     "pages/home/main",
     "pages/food/main",
     "pages/recipe/main",
@@ -17,8 +17,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black",
-    "navigationStyle":"custom"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#999",

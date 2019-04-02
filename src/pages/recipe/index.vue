@@ -13,27 +13,27 @@
       <div class="clock">12:00</div>
     </div>
 
-    <div v-for="(item,index) in data" :key="index" @click="gotoDetail">
+    <div v-for="(item,index) in recipeList" :key="index" @click="gotoDetail(item.menuUuid)">
       <div class="content_s">
         <div class="pa_t">
           <span class="cu-tag bg-cyan radius">推荐{{index+1}}</span>
-          <span class="title_text" v-text="item.name"></span>
+          <span class="title_text" v-text="item.menuName"></span>
         </div>
         <div class="pa_title white_spa">
           <span class="font_24">材料:</span>
-          <span class="font_24 color_aaa pal_5" v-text="item.title"></span>
+          <span class="font_24 color_aaa pal_5" v-text="item.menuMaterials"></span>
         </div>
         <div class="jus_center">
-          <img :src="item.imgUrl" alt style="width:100%;height:360rpx;padding:10rpx">
+          <img src="http://inews.gtimg.com/newsapp_bt/0/8240028973/1000" alt style="width:100%;height:360rpx;padding:10rpx">
         </div>
         <div class="bottom">
           <div></div>
           <div style="padding:10rpx;align-items:center;display:flex">
             <view class="cu-capsule round" style="padding-right:5rpx">
-              <view class="cu-tag bg-grey">
+              <view :class="['cu-tag',{'bg-grey':item.collect=='1'},{'bg-red':item.collect=='0'}]" @click.stop="collecClick(item.menuUuid)">
                 <text class="icon-likefill"></text>
               </view>
-              <view class="cu-tag line-blue">{{item.readerNum}}阅读</view>
+              <view class="cu-tag line-blue">{{item.menuReadNumber}}阅读</view>
             </view>
             <!-- <span style="font-size:24rpx;color:#0079f3">{{item.readerNum}}阅读</span>
             <van-icon custom-class="btom" name="like-o" />-->
@@ -47,6 +47,8 @@
 <script>
 import card from "@/components/card";
 import app from "../../App";
+import {  getRecipe,collectRp } from '../../config/functions';
+import {mapState, mapActions} from 'vuex'
 const datas = app.getSysInfo();
 export default {
   data() {
@@ -86,7 +88,7 @@ export default {
         }
       ],
       navBarHeight: 0,
-      statusBarHeight: 0
+      statusBarHeight: 0,
     };
   },
 
@@ -102,6 +104,17 @@ export default {
     this.statusBarHeight = datas.statusBarHeight;
   },
 
+  computed: {
+            ...mapState([
+                'recipeList'
+            ]),
+        },
+
+  onLoad(){
+    this.getRecipe();
+    console.log(this.$store)
+  },
+
   methods: {
     onChange(e) {
       const url = "../home/main";
@@ -112,9 +125,23 @@ export default {
     clickHandle(ev) {
       // throw {message: 'custom test'}
     },
-    gotoDetail() {
-      const url = "../recipeDetail/main";
+    gotoDetail(id) {
+      const url = "../recipeDetail/main?id="+id;
       mpvue.navigateTo({ url });
+    },
+    async getRecipe(){
+      let user = wx.getStorageSync("loginInfo");
+      let data ={menuEnteUuid:user.enteUuid};
+      this.$store.dispatch('getRecipe',data)
+      // let res = await getRecipe(data);
+      // this.rpList = res
+    },
+    async collecClick(id){
+      console.log(11)
+      let user = wx.getStorageSync("loginInfo");
+      let data = {mcolEnteUuid :user.enteUuid,mcolGuarUuid :user.suseUuid,mcolMenuUuid :id};
+      let res = await collectRp(data);
+      this.getRecipe();
     }
   }
 };

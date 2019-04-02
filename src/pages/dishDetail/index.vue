@@ -18,10 +18,14 @@
       <div class="wid_96 font_30">
         <div class="pa_10 border">泉湧的大大大白菜</div>
         <div class="pa_10">營養佔比</div>
-        <div style="height: 30vh">
+        <div v-if="!picImg" style="height: 30vh" >
         <!-- opts 前面加冒号 -->
-        <ff-canvas id="pieSelect" canvas-id="pieSelect" :opts="opts"/>
-      </div>
+          <ff-canvas id="pieSelect" canvas-id="pieSelect" :opts="opts"/>
+        </div>
+        <div v-else style="height:30vh" >
+          <!-- opts 前面加冒号 -->
+            <img :src="picImg" alt="" style="width:100vw;height:30vh">
+        </div>
       </div>
     </div>
     <div class="cu-list menu" style="margin-top:30rpx">
@@ -97,15 +101,9 @@ import app from "../../App";
 import F2 from "../../../static/libs/f2-canvas/lib/f2";
 const datas = app.getSysInfo();
 let chart = null;
-function initChart(canvas, width, height) {
-  var data = [
-    { name: '维生素A', percent: 0.4, a: '1' },
-    { name: '维生素B', percent: 0.2, a: '1' },
-    { name: '维生素C', percent: 0.18, a: '1' },
-    { name: '维生素D', percent: 0.15, a: '1' },
-    { name: '维生素E', percent: 0.05, a: '1' },
-    { name: '维生素F', percent: 0.12, a: '1' }
-  ];
+function initChart(canvas, width, height,data) {
+  console.log(width,height)
+  console.log(data)
   var chart = new F2.Chart({
     el: canvas,
     width,
@@ -119,9 +117,9 @@ function initChart(canvas, width, height) {
     }
   });
   chart.legend({
-    position: 'right'
+    position: 'left'
   });
-  chart.tooltip(false);
+  chart.tooltip(true);
   chart.coord('polar', {
     transposed: true,
     radius: 0.85,
@@ -150,7 +148,7 @@ function initChart(canvas, width, height) {
       const { shape, data, shapeInfo, selected } = ev;
       if (shape) {
         if (selected) {
-         console.log(this,data)
+
         }
       }
     }
@@ -167,6 +165,7 @@ export default {
       img: "http://inews.gtimg.com/newsapp_bt/0/8240028973/1000",
       img2: "http://inews.gtimg.com/newsapp_bt/0/8240028973/1000",
       class1: "cu-item",
+      picImg:null,
       num: 0,
       class2: "cu-item text-blue",
       numList: [
@@ -189,7 +188,15 @@ export default {
       opts: {
           // 使用延时初始化 -- 重要
           lazyLoad: true
-        }
+        },
+      data : [
+      { name: '维生素A', percent: 0.4, a: '1' },
+      { name: '维生素B', percent: 0.2, a: '1' },
+      { name: '维生素C', percent: 0.18, a: '1' },
+      { name: '维生素D', percent: 0.15, a: '1' },
+      { name: '维生素E', percent: 0.05, a: '1' },
+      { name: '维生素F', percent: 0.12, a: '1' }
+    ]
     };
   },
 
@@ -206,9 +213,15 @@ export default {
     this.statusBarHeight = datas.statusBarHeight;
     // console.log(this)
   },
-  onLoad() {
+  mounted() {
       // 在 onLoad 内部通过id找到该组件, 然后调用该组件的初始化方法
-      this.$mp.page.selectComponent('#pieSelect').init(initChart)
+      
+        this.$mp.page.selectComponent('#pieSelect').init((canvas, width, height)=>initChart(canvas, width, height,this.data),(res)=>{
+          this.picImg = res;
+          console.log(this)
+        });
+       
+
     },
 
   methods: {
@@ -221,6 +234,22 @@ export default {
     clickHandle(ev) {
       console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
+    },
+    handleCanvarToImg() {
+      wx.canvasToTempFilePath({
+        x: 0,
+        y: 0,
+        width: 260,
+        height: 180,
+        canvasId: 'pieSelect',
+        success: function(res) {
+          console.log(res)
+          // that.setData({ radarImg: res.tempFilePath});
+        },
+       fail: function (res) {
+                    console.log(res);
+                }
+        },this);
     }
   }
 };

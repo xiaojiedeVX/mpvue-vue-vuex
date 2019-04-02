@@ -98,7 +98,6 @@ export default {
       }
     },
     clickHandle(ev) {
-      console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
     },
     hideModal(){

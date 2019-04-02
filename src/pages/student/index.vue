@@ -47,7 +47,6 @@ export default {
   },
 
   created(){
-    console.log(datas)
     let platformReg = /ios/i;
     let height = 0;
     if (platformReg.test(datas.platform)) {

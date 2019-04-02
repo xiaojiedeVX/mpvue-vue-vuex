@@ -95,7 +95,6 @@ export default {
               if(item.id == id){item.isSelect = true}
           });
           this.list = list;
-          console.log(id)
       },
       hideModal(){
           this.IsshowModal = false;

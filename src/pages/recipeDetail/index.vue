@@ -85,12 +85,12 @@ export default {
       ],
     navBarHeight:0,
     statusBarHeight:0,
-    Custom:wx.getMenuButtonBoundingClientRect()
+    Custom:wx.getMenuButtonBoundingClientRect(),
+    recipeId:null
     };
   },
 
   created(){
-    console.log(datas)
     let platformReg = /ios/i;
     let height = 0;
     if (platformReg.test(datas.platform)) {
@@ -103,6 +103,11 @@ export default {
     // console.log(this)
   },
 
+  onLoad(options){
+    this.recipeId =  options.id;
+    this.getRpDetail(options.id)
+  },
+
   methods: {
     onChange(e) {
       const url = "../home/main";
@@ -112,6 +117,9 @@ export default {
     },
     clickHandle(ev) {
       // throw {message: 'custom test'}
+    },
+    async getRpDetail(id){
+      let data = {}
     }
   },
 

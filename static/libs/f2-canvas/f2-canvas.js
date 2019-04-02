@@ -67,7 +67,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    init: function(callback) {
+    init: function(callback,url) {
       const version = wx.version.version.split('.').map(n => parseInt(n, 10));
       const isValid = version[0] > 1 || (version[0] === 1 && version[1] > 9)
         || (version[0] === 1 && version[1] === 9 && version[2] >= 91);
@@ -75,13 +75,28 @@ Component({
         console.error('微信基础库版本过低，需大于等于 1.9.91。');
         return;
       }
-
+      this.tmpUrl = null;
       const ctx = wx.createCanvasContext(this.data.canvasId, this); // 获取小程序上下文
       const canvas = new Renderer(ctx);
       this.canvas = canvas;
-
+      var that  = this;
       const query = wx.createSelectorQuery().in(this);
       query.select('.f2-canvas').boundingClientRect(res => {
+        setTimeout(()=>{
+          wx.canvasToTempFilePath({
+            x: 0,
+            y: 0,
+            width: 720,
+            height: 400,
+            canvasId: this.data.canvasId,
+            success: (res)=>{
+              url(res.tempFilePath)
+            },
+           fail: function (res) {
+            console.log(res)
+                    }
+            },this);
+        },3000)
         if (typeof callback === 'function') {
           this.chart = callback(canvas, res.width, res.height);
         } else if (this.data.opts && this.data.opts.onInit) {
@@ -89,6 +104,7 @@ Component({
         }
       }).exec();
     },
+   
     touchStart(e) {
        if (this.canvas) {
          this.canvas.emitEvent('touchstart', [e]);

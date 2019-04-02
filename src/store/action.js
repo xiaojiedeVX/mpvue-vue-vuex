@@ -1,4 +1,8 @@
-import {ADD_COUNT} from './mutations-types.js'
+import {
+    ADD_COUNT,
+    GET_RECIPE
+} from './mutations-types.js'
+import { getRecipe } from '../config/functions.js';
 
 export default {
     // async getVcode({commit}){
@@ -7,5 +11,10 @@ export default {
     // },
     Add({commit}){
         commit(ADD_COUNT)
+    },
+    async getRecipe({commit},data){
+        console.log(data)
+        let res = await getRecipe(data);
+        commit(GET_RECIPE,res);
     }
 }
