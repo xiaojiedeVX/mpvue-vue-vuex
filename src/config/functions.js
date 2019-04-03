@@ -7,7 +7,6 @@ function Request(url='',data = {},method="POST"){
 	return new Promise((resolve,reject)=>{
 		let user = wx.getStorageSync("loginInfo");
 		let token = user.token||null;
-		console.log(token)
 		wx.request({
 			url: baseUrl + url, // 仅为示例，并非真实的接口地址
 			method: method,
@@ -53,6 +52,7 @@ function showMessage(msg){
 	});
 }
 
+
 function cvsData(data,page,pageSize){
 	let tempData = {
 		check:"",
@@ -65,6 +65,36 @@ function cvsData(data,page,pageSize){
 	return tempData;
 }
 
+export function formatDate(date){
+	const year = date.getFullYear();
+	const month = date.getMonth()+1;
+	const day = date.getDate();
+	return [year,month,day].map(formatNumber).join('-')
+}
+
+export function getWeekDay(){
+	var new_Date = new Date()
+    var timesStamp = new_Date.getTime();
+    var currenDay = new_Date.getDay();
+    var dates = [];
+    for(var i = 0; i < 5; i++) {
+		let date =  new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7));
+		const year = date.getFullYear();
+		const month = date.getMonth()+1;
+		const day = date.getDate();
+        dates.push([year,month,day].map(formatNumber).join('-'));
+    }
+    return dates
+}
+const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+  }
+  
+
+
+
+
 export const login = (data)=> Request(fetchUrl.login,cvsData(data)) 
 
 export const getImg = () => Request(fetchUrl.getImg,null,'GET')
@@ -75,4 +105,20 @@ export const logOut = (data) => Request(fetchUrl.logOut,cvsData(data));
 
 export const getRecipe = (data) => Request(fetchUrl.getRecipe,cvsData(data));
 
-export const collectRp = (data) => Request(fetchUrl.collectRp,cvsData(data))
+export const collectRp = (data) => Request(fetchUrl.collectRp,cvsData(data));
+
+export const getRpDetail = (data) => Request(fetchUrl.getRpDetail,cvsData(data));
+
+export const getUserInfo = (data) => Request(fetchUrl.getUserInfo,cvsData(data)) 
+
+export const getParentInfo = (data) => Request(fetchUrl.getParentInfo,cvsData(data))
+
+export const getStutentInfo = (data) => Request(fetchUrl.getStutentInfo,cvsData(data));
+
+export const setDefaultStudent = (data) => Request(fetchUrl.setDefaultStudent,cvsData(data));
+
+export const getBanner = (data) => Request(fetchUrl.getBanner,cvsData(data))
+
+export const getRpCollect = (data) => Request(fetchUrl.getRpCollect,cvsData(data))
+
+export const getRpCollectDet = (data) =>Request(fetchUrl.getRpCollectDet,cvsData(data))

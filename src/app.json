@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/index/main",
+
     "pages/home/main",
+    "pages/index/main",
     "pages/food/main",
     "pages/recipe/main",
     "pages/message/main",
@@ -11,13 +12,17 @@
     "pages/recipeDetail/main",
     "pages/parent/main",
     "pages/student/main",
-    "pages/updatePw/main"
+    "pages/updatePw/main",
+    "pages/myCollect/main",
+    "pages/recipeCollect/main",
+    "pages/recipeCollectDet/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "navigationStyle":"custom"
   },
   "tabBar": {
     "color": "#999",

@@ -17,8 +17,11 @@
               style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"
             ></div>
             <div class="content flex-sub">
-              <div>晓杰哥哥</div>
-              <div class="text-gray text-sm flex justify-between">2099年12月3日</div>
+              <div v-text="userInfo.guarName"></div>
+              <div class="text-gray text-sm flex">
+                <text class="icon-phone lg text-gray" style="font-size:20px;padding-right:10px"></text>
+                <text v-text="userInfo.guarTel"></text>
+              </div>
             </div>
           </div>
         </div>
@@ -38,14 +41,14 @@
         </navigator>
       </div>
       <div class="cu-item arrow">
-        <navigator class="content" url="../log/log" hover-class="none">
+        <navigator class="content" url="../myCollect/main" hover-class="none">
           <text class="icon-present text-green"></text>
-          <text class="text-grey">菜谱收藏</text>
+          <text class="text-grey">我的收藏</text>
         </navigator>
       </div>
       <div class="cu-item arrow">
         <navigator class="content" url="../updatePw/main" hover-class="none">
-          <text class="icon-present text-green"></text>
+          <text class="icon-edit text-green"></text>
           <text class="text-grey">修改密码</text>
         </navigator>
       </div>
@@ -57,7 +60,7 @@
       </div>
       <div class="cu-item">
         <div class="content" @click="shwoModal">
-          <text class="icon-pullup text-red"></text>
+          <text class="icon-roundclose text-red"></text>
           <text class="text-grey">退出登录</text>
         </div>
       </div>
@@ -65,7 +68,7 @@
         <div class="cu-dialog">
           <div class="cu-bar bg-white justify-end">
             <div class='content'>退出登录</div>
-            <div class='action' bindtap='hideModal'>
+            <div class='action' @click='hideModal'>
               <text class='icon-close text-red'></text>
             </div>
           </div>
@@ -78,7 +81,7 @@
                   <button class='cu-btn bg-green margin-left' @click='clikOk'>确定</button>
                 </div>
               </div>
-            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -87,6 +90,7 @@
 <script>
 import card from "@/components/card";
 import app from "../../App";
+import { mapState,mapMutations,mapActions} from  'vuex'
 import { logOut } from '../../config/functions'
 const datas = app.getSysInfo();
 export default {
@@ -109,6 +113,15 @@ export default {
     }
     this.navBarHeight = datas.statusBarHeight + height;
     this.statusBarHeight = datas.statusBarHeight;
+  },
+  computed:{
+    ...mapState([
+      'userInfo'
+    ])
+  },
+
+  onLoad(){
+    this.getUserInfo();
   },
 
   methods: {
@@ -134,7 +147,12 @@ export default {
       wx.clearStorageSync();
       const url = '../login/main';
       mpvue.redirectTo({url})
-    }
+    },
+    getUserInfo(){
+      let user = wx.getStorageSync("loginInfo");
+      let data = {guarUuid :user.suseUuid,studEnteUuid  :user.enteUuid};
+      this.$store.dispatch('getUserInfo',data);
+    },
   }
 };
 </script>

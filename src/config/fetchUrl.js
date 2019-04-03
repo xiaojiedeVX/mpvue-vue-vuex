@@ -5,5 +5,13 @@ export default {
     refLogin:"api/system/ref/login",
     logOut:"api/system/loginout",
     getRecipe:"api/menu/search",
-    collectRp:"api/menu/collect"
+    collectRp:"api/menu/collect",
+    getRpDetail:"api/menu/search/des",
+    getUserInfo:"/api/personal/student" ,// 获取默认学生信息
+    getParentInfo:"api/personal/info",
+    getStutentInfo:"api/personal/student/info",
+    setDefaultStudent:"api/personal/student/default",
+    getBanner:"api/home/banner/list",
+    getRpCollect:"api/menu/search",
+    getRpCollectDet:"api/menu/search/des"
 }

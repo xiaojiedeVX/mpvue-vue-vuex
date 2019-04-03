@@ -77,6 +77,7 @@
 
 <script>
 import app from "../../App";
+import {mapState,mapMutations} from 'vuex'
 const datas = app.getSysInfo();
 export default {
   
@@ -114,6 +115,11 @@ export default {
     };
   },
 
+  computed:{
+    ...mapState([
+      'bannerList'
+    ])
+  },
   created(){
     let platformReg = /ios/i;
     let height = 0;
@@ -129,6 +135,10 @@ export default {
 
   beforeCreate() {
    
+ },
+
+ onLoad(){
+   this.getBanner();
  },
 
   methods: {
@@ -147,13 +157,19 @@ export default {
       mpvue.navigateTo({ url })
     },
     
-  towerSwiper(list) {
-    for (let i = 0; i < list.length; i++) {
-      list[i].zIndex = parseInt(list.length / 2) + 1 - Math.abs(i - parseInt(list.length / 2))
-      list[i].mLeft = i - parseInt(list.length / 2)
-    };
-    this.towerList = list;
-  },
+    towerSwiper(list) {
+      for (let i = 0; i < list.length; i++) {
+        list[i].zIndex = parseInt(list.length / 2) + 1 - Math.abs(i - parseInt(list.length / 2))
+        list[i].mLeft = i - parseInt(list.length / 2)
+      };
+      this.towerList = list;
+    },
+
+    getBanner(){
+      let user = wx.getStorageSync("loginInfo");
+      let data ={bannEnteUuid :user.enteUuid};
+      this.$store.dispatch('getBanner',data) 
+    },
   },
 
 };

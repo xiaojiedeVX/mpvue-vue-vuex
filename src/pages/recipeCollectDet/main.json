@@ -4,6 +4,5 @@
        "van-tabbar": "/static/vant/tabbar/index",
        "van-icon": "/static/vant/icon/index"
     },
-    "navigationStyle":"custom",
-    "enablePullDownRefresh":true
+    "navigationStyle":"custom"
 }

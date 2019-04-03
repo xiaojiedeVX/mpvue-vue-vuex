@@ -1,19 +1,16 @@
 <template>
   <div>
-    <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
-      <div
-        class="cu-bar fixed bg-gradual-blue"
-        :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}"
-      >
-        <navigator class="action" open-type="navigateBack" delta="1" hover-class="none">菜谱推荐</navigator>
+     <div class="cu-custom" :style="{height: navBarHeight + 'px'}">
+      <div class="cu-bar fixed bg-gradual-pink" :style="{height: navBarHeight + 'px',paddingTop:statusBarHeight + 'px'}">
+        <navigator class='action' open-type="navigateBack" delta="1" hover-class="none" >
+          <text class='icon-back'></text>
+        </navigator>
+        <div class='content' :style="{top:statusBarHeight+'px'}">菜谱收藏</div>
       </div>
     </div>
-    <div>
-      <div class="title">*菜谱推荐为每日提供的菜品，互相组合，煎、炸、烹、炒后的成菜</div>
-      <div class="clock" v-text="nowDate"></div>
-    </div>
 
-    <div v-for="(item,index) in recipeList" :key="index" @click="gotoDetail(item.menuUuid)">
+
+    <div v-for="(item,index) in rpCollectList" :key="index" @click="gotoDetail(item.menuUuid)">
       <div class="content_s">
         <div class="pa_t">
           <span class="cu-tag bg-cyan radius">推荐{{index+1}}</span>
@@ -89,7 +86,6 @@ export default {
       ],
       navBarHeight: 0,
       statusBarHeight: 0,
-      nowDate:null
     };
   },
 
@@ -103,26 +99,21 @@ export default {
     }
     this.navBarHeight = datas.statusBarHeight + height;
     this.statusBarHeight = datas.statusBarHeight;
-    this.getFreshDate();
   },
 
   computed: {
     ...mapState([
-        'recipeList'
+        'rpCollectList'
     ]),
   },
 
   onShow(){
-    this.getRecipe();
-  },
-
-  onPullDownRefresh(){
-    this.getFreshDate();
+    this.getRecipeCollect();
   },
 
   methods: {
     ...mapMutations([
-      'GET_RECIPE',
+      'GET_RPCOLLECT_LIST',
     ]),
     onChange(e) {
       const url = "../home/main";
@@ -134,29 +125,25 @@ export default {
       // throw {message: 'custom test'}
     },
     gotoDetail(id) {
-      const url = "../recipeDetail/main?id="+id;
+      const url = "../recipeCollectDet/main?id="+id;
       mpvue.navigateTo({ url });
     },
-    getFreshDate(){
-    let date = new Date()
-    this.nowDate = date.getHours() + ':'+ date.getMinutes();
-  },
-    async getRecipe(){
+    getRecipeCollect(){
       let user = wx.getStorageSync("loginInfo");
       let data ={menuEnteUuid:user.enteUuid};
-      this.$store.dispatch('getRecipe',data)
+      this.$store.dispatch('getRpCollect',data)
     },
     async collecClick(id){
       let user = wx.getStorageSync("loginInfo");
       let data = {mcolEnteUuid :user.enteUuid,mcolGuarUuid :user.suseUuid,mcolMenuUuid :id};
       let res = await collectRp(data);
-      let { recipeList } = this;
-      recipeList.forEach(item=>{
+      let { rpCollectList } = this;
+      rpCollectList.forEach(item=>{
         if(item.menuUuid==id){
           item.collect=!item.collect
         }
       });
-      this.RECORD_USERINFO(recipeList)
+      this.GET_RPCOLLECT_LIST(rpCollectList)
     }
   }
 };

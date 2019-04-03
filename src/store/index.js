@@ -8,7 +8,14 @@ Vue.use(Vuex)
 
 const state = {
 	count: 1, // 当前数值,
-	recipeList:[]
+	recipeList:[],
+	rpDetailList:[],
+	userInfo:{},
+	parentInfo:{},
+	studentInfo:[],
+	bannerList:[],
+	rpCollectList:[],
+	rpCollectDet:[]
 }
 
 export default new Vuex.Store({

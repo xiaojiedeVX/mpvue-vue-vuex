@@ -13,7 +13,7 @@
            <div class="cu-form-group">
               <div class='title'>姓名</div>
               <div></div>
-              <div class='title'>马云爸爸</div>
+              <div class='title' v-text="parentInfo.guarName"></div>
            </div>
             <div class="cu-form-group">
               <div class='title'>手机号码</div>
@@ -22,8 +22,8 @@
                 <div class='cu-tag bg-grey'>
                   <text class='icon-lock lg text-white'></text>
                 </div>
-                <div class="cu-tag line-grey">
-                  13368885613
+                <div class="cu-tag line-grey" v-text="parentInfo.guarTel" >
+                
                 </div>
               </div>
             </div>
@@ -39,6 +39,7 @@
 
 <script>
 import app from '../../App';
+import {mapState,mapMutations,mapActions} from 'vuex';
 const datas = app.getSysInfo();
 export default {
     data(){
@@ -47,6 +48,12 @@ export default {
         statusBarHeight:0,
         Custom:wx.getMenuButtonBoundingClientRect()
     };
+  },
+
+  computed:{
+    ...mapState([
+      'parentInfo'
+    ])
   },
 
   created(){
@@ -61,7 +68,17 @@ export default {
     this.statusBarHeight = datas.statusBarHeight
     // console.log(this)
   },
-
+  
+  onLoad(){
+    this.getParentInfo();
+  },
+  methods:{
+    getParentInfo(){
+      let user = wx.getStorageSync("loginInfo");
+      let data = {guarEnteUuid :user.enteUuid,guarUuid :user.suseUuid};
+      this.$store.dispatch('getParentInfo',data)
+    }
+  },
 }
 </script>
 

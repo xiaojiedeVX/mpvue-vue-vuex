@@ -14,10 +14,10 @@
             <div style="display:flex;justify-content:space-between;align-items:center">
               <div>
                 <span class="cu-tag bg-cyan radius">推荐</span>
-                <span class="title_text" v-text="rpDetailList.menuName"></span>
+                <span class="title_text" v-text="rpCollectDet.menuName"></span>
               </div>
               <div>
-                <text @click="collectClick" :class="['icon-likefill',{'text-red':rpDetailList.collect==0},{'text-grey':rpDetailList.collect==1}]"></text>
+                <text @click="collectClick" :class="['icon-likefill',{'text-red':rpCollectDet.collect==0},{'text-grey':rpCollectDet.collect==1}]"></text>
               </div>
             </div>
           </div>
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class='padding bg-white'>
-            <div class='text-left padding' v-html="rpDetailList.menuMaterials"></div>
+            <div class='text-left padding' v-html="rpCollectDet.menuMaterials"></div>
           </div>
            <div class="cu-bar margin-top">
             <div class='action'>
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class='padding bg-white' style="padding-bottom:30rpx">
-            <div class='text-left padding' v-html="rpDetailList.menuDo"></div>
+            <div class='text-left padding' v-html="rpCollectDet.menuDo"></div>
             <!-- <div class='text-left padding'>2.热锅凉油，待油轻微帽烟将冰糖加入并不停搅拌，你会发现开始晶莹的冰糖会变的象白糖，然后象黄糖，然后象红塘然后象……没有然后了！赶快加肉否则糖就糊了！你的铲子别停呀！继续搅拌！糖会挂在肉上很不均匀，别管它继续搅你的。这时糖会因为加热的原因均匀的挂在肉上。</div> -->
             <!-- <div class='text-left padding'>3.现在加水吧！末过肉即可，还有葱段姜片。大火烧开，改小火煮半个小时。</div> -->
           </div>
@@ -93,7 +93,7 @@ export default {
 
   computed:{
     ...mapState([
-      'rpDetailList'
+      'rpCollectDet'
     ])
   },
 
@@ -117,29 +117,20 @@ export default {
 
   methods: {
     ...mapMutations([
-      'GET_RP_DETAIL'
+      'GET_RPCOLLECT_DET'
     ]),
-    onChange(e) {
-      const url = "../home/main";
-      if(e.mp.detail==0){
-         mpvue.switchTab({ url });
-      }
-    },
-    clickHandle(ev) {
-      // throw {message: 'custom test'}
-    },
     getRpDetail(id){
       let user = wx.getStorageSync("loginInfo");
       let data = {menuUuid :id,menuEnteUuid :user.enteUuid};
-      this.$store.dispatch('getRpDetail',data)
+      this.$store.dispatch('getRpCollectDet',data)
     },
     async collectClick(){
       let user = wx.getStorageSync("loginInfo");
       let data = {mcolMenuUuid :this.recipeId,mcolGuarUuid :user.suseUuid,mcolEnteUuid :user.enteUuid};
       let res = await collectRp(data);
-      let { rpDetailList } = this;
-      rpDetailList.collect = !rpDetailList.collect;
-      this.GET_RP_DETAIL(rpDetailList);
+      let { rpCollectDet } = this;
+      rpCollectDet.collect = !rpCollectDet.collect;
+      this.GET_RPCOLLECT_DET(rpCollectDet);
     }
   },
 

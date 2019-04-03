@@ -14,7 +14,7 @@
             <input type="text" placeholder="搜索食材,菜譜" confirm-type="search" />
           </div>
           <div class='action' @click.stop="showModal">
-            <text>2018-03-18 星期五</text>
+            <text>{{nowDay}} 星期{{weekDay}}</text>
             <text class="icon-triangledownfill"></text>
           </div>
         </div>
@@ -22,16 +22,10 @@
       <div :style="{top:navBarHeight + 'px'}" :class="['cu-modal','drawer-modal','justify-end',{'show':modaShow==true}]">
         <div class="cu-dialog basis-lg" catchtap >
           <div class="cu-list menu menu-avatar text-left" >
-            <div class="cu-item arrow" style="padding-left:30rpx" @click='hideModal'>
+            <div class="cu-item arrow" style="padding-left:30rpx" v-for="(item,index) in dateList" :key="index" @click='hideOk(item)'>
               <div class='content'>
                 <text class='icon-circlefill text-grey'></text>
-                <text class='text-grey'>2018-03-19</text>
-              </div>
-            </div>
-            <div class="cu-item arrow" style="padding-left:30rpx" @click='hideModal'>
-              <div class='content'>
-                <text class='icon-circlefill text-grey'></text>
-                <text class='text-grey'>2018-03-19</text>
+                <text class='text-grey' v-text="item"></text>
               </div>
             </div>
           </div>
@@ -64,6 +58,7 @@
 <script>
 import card from "@/components/card";
 import app from "../../App";
+import { getWeekDay, formatDate } from '../../config/functions'
 const datas = app.getSysInfo();
 export default {
   data() {
@@ -74,8 +69,42 @@ export default {
       hideModalClass:'cu-modal,drawer-modal,justify-end',
       modaShow:false,
       navBarHeight:0,
-      statusBarHeight:0
+      statusBarHeight:0,
+      dateList:getWeekDay(),
+      nowDay:formatDate(new Date())
     };
+  },
+
+  computed:{
+    weekDay(){
+      let date = new Date(this.nowDay);
+      let day = date.getDay();
+      switch(day){
+        case 1 :
+         return "一";
+         break;
+        case 2 :
+         return "二";
+         break;
+        case 3 :
+         return "三";
+         break;
+        case 4 :
+         return "四";
+         break;
+        case 5 :
+         return "五";
+         break;
+      }
+    }
+  },
+
+  onLoad(){
+    // let date = new Date();
+    // // let date1 = date.setDate(date.getDate() - date.getDay() + 1);
+    // let date2 =  date.setDate(date.getDate() + 6);
+    // // console.log(formatDate(date1))
+    console.log(getWeekDay())
   },
 
   created(){
@@ -101,6 +130,10 @@ export default {
       // throw {message: 'custom test'}
     },
     hideModal(){
+      this.modaShow = false
+    },
+    hideOk(item){
+      this.nowDay = item&&item;
       this.modaShow = false
     },
     showModal(){
