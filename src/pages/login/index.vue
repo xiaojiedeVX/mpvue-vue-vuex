@@ -86,8 +86,7 @@ export default {
 
       let res = await login(data);
       this.logining = true;
-      console.log(res)
-      wx.setStorageSync('loginInfo',res)
+      wx.setStorageSync('loginInfo',res.params)
       this.timer = setTimeout(() => {
         this.logining = false;
         const url ="../home/main";
@@ -97,8 +96,8 @@ export default {
     async loadImg() {
       console.log('test')
       let res = await getImg();
-      this.codeImg = res.image;
-      this.codeId = res.codeId;
+      this.codeImg = res.params.image;
+      this.codeId = res.params.codeId;
     }
   },
 

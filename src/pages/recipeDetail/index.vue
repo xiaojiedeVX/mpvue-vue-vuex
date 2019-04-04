@@ -111,6 +111,7 @@ export default {
   },
 
   onLoad(options){
+    console.log(op)
     this.recipeId =  options.id;
     this.getRpDetail(options.id)
   },
@@ -136,7 +137,7 @@ export default {
     async collectClick(){
       let user = wx.getStorageSync("loginInfo");
       let data = {mcolMenuUuid :this.recipeId,mcolGuarUuid :user.suseUuid,mcolEnteUuid :user.enteUuid};
-      let res = await collectRp(data);
+      await collectRp(data);
       let { rpDetailList } = this;
       rpDetailList.collect = !rpDetailList.collect;
       this.GET_RP_DETAIL(rpDetailList);

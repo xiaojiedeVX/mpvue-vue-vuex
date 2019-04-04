@@ -136,7 +136,7 @@ export default {
     async collecClick(id){
       let user = wx.getStorageSync("loginInfo");
       let data = {mcolEnteUuid :user.enteUuid,mcolGuarUuid :user.suseUuid,mcolMenuUuid :id};
-      let res = await collectRp(data);
+      await collectRp(data);
       let { rpCollectList } = this;
       rpCollectList.forEach(item=>{
         if(item.menuUuid==id){

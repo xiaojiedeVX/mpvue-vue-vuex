@@ -99,6 +99,7 @@
 <script>
 import app from "../../App";
 import F2 from "../../../static/libs/f2-canvas/lib/f2";
+import {mapState,mapMutations} from 'vuex'
 const datas = app.getSysInfo();
 let chart = null;
 function initChart(canvas, width, height,data) {
@@ -196,8 +197,23 @@ export default {
       { name: '维生素D', percent: 0.15, a: '1' },
       { name: '维生素E', percent: 0.05, a: '1' },
       { name: '维生素F', percent: 0.12, a: '1' }
-    ]
+    ],
+    orderUuid :null,
+    goodUuid :null
     };
+  },
+
+  computed:{
+    ...mapState([
+      'foodGoodDet'
+    ])
+  },
+
+  onLoad(options){
+    let dataSource = JSON.parse(options.data)
+    this.orderUuid = dataSource.orderUuid;
+    this.goodUuid = dataSource.goodUuid;
+    this.getGoodDet();
   },
 
   created() {
@@ -215,11 +231,11 @@ export default {
   },
   mounted() {
       // 在 onLoad 内部通过id找到该组件, 然后调用该组件的初始化方法
-      
-        this.$mp.page.selectComponent('#pieSelect').init((canvas, width, height)=>initChart(canvas, width, height,this.data),(res)=>{
-          this.picImg = res;
-          console.log(this)
-        });
+    console.log(this)
+    this.$mp.page.selectComponent('#pieSelect').init((canvas, width, height)=>initChart(canvas, width, height,this.data),(res)=>{
+      this.picImg = res;
+      console.log(this)
+    });
        
 
     },
@@ -250,6 +266,11 @@ export default {
                     console.log(res);
                 }
         },this);
+    },
+    getGoodDet(){
+      let user = wx.getStorageSync("loginInfo");
+      let data = {guarUuid :user.suseUuid,orderUuid :this.orderUuid,goodUuid:this.goodUuid};
+      this.$store.dispatch('getGoodDet',data)
     }
   }
 };

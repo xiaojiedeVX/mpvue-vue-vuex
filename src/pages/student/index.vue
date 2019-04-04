@@ -98,7 +98,7 @@ export default {
     },
     getStudent(){
         let user = wx.getStorageSync("loginInfo");
-        let data = {guarEnteUuid:user.enteUuid,guarUuid:user.suseUuid};
+        let data = {guarEnteUuid:user.enteUuid,guarUuid:user.suseUuid}; 
         this.$store.dispatch('getStutentInfo',data)
     },
     async setDefaultStudent(id){

@@ -8,6 +8,10 @@ import {
     GET_BANNER,
     GET_RPCOLLECT_LIST,
     GET_RPCOLLECT_DET,
+    GET_HOME_GOOG,
+    GET_FOOD_GOOD,
+    GET_TOP_GOOD,
+    GET_GOOD_DET
 } from './mutations-types.js'
 import { 
     getRecipe,
@@ -17,7 +21,9 @@ import {
     getStutentInfo,
     getBanner,
     getRpCollect,
-    getRpCollectDet
+    getRpCollectDet,
+    getHomeGood,
+    getGoodDet
  } from '../config/functions.js';
 
 export default {
@@ -59,6 +65,33 @@ export default {
     async getRpCollectDet({commit},data){
         let res = await getRpCollectDet(data);
         commit(GET_RPCOLLECT_DET,res)
-    }
-    
+    },
+    async getHomeGood({commit},data){
+        let page = data.page;
+        let pageSize = data.pageSize;
+        delete data.page;
+        delete data.pageSize;
+        let res = await getHomeGood(data,page,pageSize);
+        commit(GET_HOME_GOOG,res)
+    },
+    async getTopGood({commit},data){
+        let page = data.page;
+        let pageSize = data.pageSize;
+        delete data.page;
+        delete data.pageSize;
+        let res = await getHomeGood(data,page,pageSize);
+        commit(GET_TOP_GOOD,res)
+    },
+    async getFoodGood({commit},data){
+        let page = data.page;
+        let pageSize = data.pageSize;
+        delete data.page;
+        delete data.pageSize;
+        let res = await getHomeGood(data,page,pageSize);
+        commit(GET_FOOD_GOOD,res)
+    },
+    async getGoodDet({commit},data){
+        let res = await getGoodDet(data);
+        commit(GET_GOOD_DET,res)
+    } 
 }

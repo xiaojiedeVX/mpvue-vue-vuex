@@ -17,7 +17,7 @@
               style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"
             ></div>
             <div class="content flex-sub">
-              <div v-text="userInfo.guarName"></div>
+              <div v-text="userInfo.studName"><text class="text-xs" style="padding-left:20rpx"> (当前绑定学生)</text></div>
               <div class="text-gray text-sm flex">
                 <text class="icon-phone lg text-gray" style="font-size:20px;padding-right:10px"></text>
                 <text v-text="userInfo.guarTel"></text>
@@ -120,7 +120,7 @@ export default {
     ])
   },
 
-  onLoad(){
+  onShow(){
     this.getUserInfo();
   },
 
@@ -143,7 +143,7 @@ export default {
     async clikOk(){
       let user = wx.getStorageSync("loginInfo");
       let data = {suseOnlineTag :user.suseOnlineTag ,suseUuid :user.suseUuid };
-      let res = await logOut(data); 
+      await logOut(data); 
       wx.clearStorageSync();
       const url = '../login/main';
       mpvue.redirectTo({url})

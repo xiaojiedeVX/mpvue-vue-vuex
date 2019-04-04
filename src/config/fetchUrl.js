@@ -13,5 +13,8 @@ export default {
     setDefaultStudent:"api/personal/student/default",
     getBanner:"api/home/banner/list",
     getRpCollect:"api/menu/search",
-    getRpCollectDet:"api/menu/search/des"
+    getRpCollectDet:"api/menu/search/des",
+    getHomeGood:"api/home/goods/search",
+    upDatePw:"api/personal/edit/password",
+    getGoodDet:"api/home/goods/des"
 }

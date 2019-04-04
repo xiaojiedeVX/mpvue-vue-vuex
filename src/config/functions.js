@@ -3,7 +3,7 @@ import { baseUrl } from './env';
 import fetchUrl  from './fetchUrl'
 //登录
 
-function Request(url='',data = {},method="POST"){
+function Request(url='',data = {},method="POST",fnError){
 	return new Promise((resolve,reject)=>{
 		let user = wx.getStorageSync("loginInfo");
 		let token = user.token||null;
@@ -18,11 +18,11 @@ function Request(url='',data = {},method="POST"){
 			success: function (res) {
 				switch(res.data.code){
 					case '200':
-						resolve(res.data.params)
+						resolve(res.data)
 						break;
 					case '400':
 						showMessage(res.data.error);
-						console.log(url==fetchUrl.refLogin)
+						fnError&&fnError();
 						if(url == fetchUrl.refLogin){
 							wx.clearStorageSync();
 							setTimeout(()=>{
@@ -122,3 +122,9 @@ export const getBanner = (data) => Request(fetchUrl.getBanner,cvsData(data))
 export const getRpCollect = (data) => Request(fetchUrl.getRpCollect,cvsData(data))
 
 export const getRpCollectDet = (data) =>Request(fetchUrl.getRpCollectDet,cvsData(data))
+
+export const getHomeGood = (data,page,pageSize) => Request(fetchUrl.getHomeGood,cvsData(data,page,pageSize))
+
+export const upDatePw = (data,fnError) => Request(fetchUrl.upDatePw,cvsData(data),'POST',fnError)
+
+export const getGoodDet = (data) => Request(fetchUrl.getGoodDet,cvsData(data))

@@ -15,3 +15,11 @@ export const GET_BANNER = "GET_BANNER";
 export const GET_RPCOLLECT_LIST = "GET_RPCOLLECT_LIST";
 
 export const GET_RPCOLLECT_DET = "GET_RPCOLLECT_DET";
+
+export const GET_HOME_GOOG = "GET_HOME_GOOG";
+
+export const GET_FOOD_GOOD = "GET_FOOD_GOOD" ;
+
+export const GET_TOP_GOOD = "GET_TOP_GOOD"
+
+export const GET_GOOD_DET = "GET_GOOD_DET"

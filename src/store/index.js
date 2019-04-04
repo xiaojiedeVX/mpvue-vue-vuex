@@ -15,7 +15,13 @@ const state = {
 	studentInfo:[],
 	bannerList:[],
 	rpCollectList:[],
-	rpCollectDet:[]
+	rpCollectDet:[],
+	homeGoodList:[],
+	foodGoodList:[],
+	homeGoodTotal:0,
+	topGoodList:[],
+	foodGoodTotal:0,
+	foodGoodDet:[]
 }
 
 export default new Vuex.Store({

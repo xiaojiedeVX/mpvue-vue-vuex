@@ -14,19 +14,19 @@
         <div>
             <div class="cu-form-group">
                 <div class='title'>手机账号</div>
-                <input placeholder="13368856413" disabled class='radius' name='input'/>
+                <input :placeholder="parentInfo.guarTel" disabled class='radius' name='input'/>
             </div>
             <div class="cu-form-group">
                 <div class='title'>原 密 码</div>
-                <input placeholder="请输入原密码"  class='radius' name='input'/>
+                <input placeholder="请输入原密码" v-model="oldPw"  class='radius' name='input'/>
             </div>
             <div class="cu-form-group">
                 <div class='title'>新 密 码</div>
-                <input placeholder="请输入新密码"  class='radius' name='input'/>
+                <input placeholder="请输入新密码" v-model="newPw"  class='radius' name='input'/>
             </div>
             <div class="cu-form-group">
                 <div class='title'>确认密码</div>
-                <input placeholder="请确认密码" disabled class='radius' name='input'/>
+                <input placeholder="请确认密码" v-model="secondPw" class='radius' name='input'/>
             </div>
             <div class="padding flex flex-direction" @click="showModal">
             <button class='cu-btn bg-blue margin-tb-sm lg'>确认修改</button>
@@ -47,7 +47,7 @@
                  <div class="cu-bar bg-white justify-end">
                  <div class='action'>
                      <button class='cu-btn line-green text-green' @click='hideModal'>取消</button>
-                     <button class='cu-btn bg-green margin-left' @click='hideModal'>确定</button>
+                     <button class='cu-btn bg-green margin-left' @click='handleOk'>确定</button>
                  </div>
                  </div>
              </div>
@@ -58,6 +58,8 @@
 
 <script>
 import app from '../../App';
+import {mapState} from 'vuex';
+import {upDatePw} from '../../config/functions';
 const datas = app.getSysInfo();
 export default {
     data(){
@@ -70,8 +72,24 @@ export default {
             {id:2,isSelect:false},
             {id:3,isSelect:false},
         ],
-        IsshowModal:false
+        IsshowModal:false,
+        oldPw:'',
+        newPw:'',
+        secondPw:'',
+        timer:null
     };
+  },
+  computed:{
+      ...mapState([
+          'parentInfo'
+      ]),
+      IsOk(){
+          return this.newPw==''||this.oldPw||this.secondPw==''?true:false
+      }
+  },
+
+  onLoad(){
+      this.getUserInfo();
   },
 
   created(){
@@ -101,7 +119,45 @@ export default {
       },
       showModal(){
           this.IsshowModal = true;
+      },
+      getUserInfo(){
+        let user = wx.getStorageSync("loginInfo");
+        let data = {guarEnteUuid :user.enteUuid,guarUuid :user.suseUuid};
+        this.$store.dispatch('getParentInfo',data)
+      },
+      async handleOk(){
+        if(this.newPw==''||this.oldPw==''||this.secondPw==''){
+            this.showMessage('请输入完成在提交');this.IsshowModal = false;return;
+        }
+        if(this.newPw!=this.secondPw){
+            this.showMessage('两次输入的密码不一致，请重新输入');
+            this.IsshowModal = false;
+            return
+        };
+        let user = wx.getStorageSync("loginInfo");
+        let data ={guarPwd :this.oldPw,guarNewsPwd :this.newPw,guarTel :this.parentInfo.guarTel,guarUuid :user.suseUuid};
+        await upDatePw(data,()=>{
+          this.IsshowModal = false;
+        });
+        this.IsshowModal = false;
+        this.showMessage('密码修改成功，请重新登录')
+        this.timer = setTimeout(()=>{
+            const url = '../login/main';
+            mpvue.redirectTo({url})
+            wx.clearStorageSync();
+        },500)
+
+      },
+      showMessage(msg){
+          wx.showToast({
+              title:msg,
+              duration:1500,
+              icon:'none'
+          })
       }
+  },
+  onUnload(){
+      clearTimeout(this.timer)
   }
 
 }

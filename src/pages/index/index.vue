@@ -33,7 +33,7 @@ export default {
       async reftoken(data,url){
         let datas = {suseOnlineTag :data.suseOnlineTag ,suseUuid :data.suseUuid ,token :data.token}
         let res = await refLogin(datas);
-        wx.setStorageSync("loginInfo",res)
+        wx.setStorageSync("loginInfo",res.params)
         mpvue.switchTab({url})
       }
     },

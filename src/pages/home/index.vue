@@ -5,17 +5,18 @@
          <div class="action"  hover-class="none"  style="margi-left:30rpx">首页</div>
       </div>
     </div>
+    <img @click="goTop" src='../../../static/images/toTop.svg' class='goTop' :hidden='!floorstatus'/>
     <div>
        <swiper
-      :indicator-dots="indicatorDots"
-      :autoplay="autoplay"
-      :interval="interval"
-      :duration="duration"
-      style="height:50vw"
+        :indicator-dots="indicatorDots"
+        :autoplay="autoplay"
+        :interval="interval"
+        :duration="duration"
+        style="height:50vw"
       >
-      <block v-for="(img,index) in imgUrls" :key="index" >
+      <block v-for="(item,index) in bannerList" :key="index" >
         <swiper-item>
-          <image :src="img" class="slide-image" style="width:100%;height:50vw"/>
+          <image :src="item?imgBaseUrl + item.bannImg:null" class="slide-image" style="width:100%;height:50vw"/>
         </swiper-item>
       </block>
     </swiper>
@@ -28,34 +29,33 @@
     </div>
     </div> -->
     <div class="img_content">
-      <div v-for="(item,index) in foodUrls" :key="index">
-        <img @click="gotoDetails" :src="item.url" class="img_item" alt="">
+      <div v-for="(item,index) in topGoodList" :key="index">
+        <img @click="gotoDetails(item)" :src="item?imgBaseUrl + item.goodImage:null"  mode="aspectFill" class="img_item" alt="">
       </div>
     </div>
- 
     <div class="box_item">
         <div class="line"></div>
         <div class="text">生鲜供应</div>
         <div class="line"></div>
     </div>
-    <div v-for="(img,index) in vetablesUrl" :key="index">
-      <div class="cu-card case">
+    <div v-for="(item,index) in homeGoodList" :key="index">
+      <div class="cu-card case"  @click="gotoDetails(item)">
       <div class="cu-item shadow">
         <div class='image'>
-          <image :src="img" mode="widthFix"></image>
+          <image :src="item?imgBaseUrl + item.goodImage:null" mode="aspectFill"></image>
           <!-- <div class="cu-tag bg-blue">泉涌大大白菜</div> -->
-          <div class='cu-bar bg-shadeBottom'>泉涌大白菜是怎么怎么的好</div>
+          <div class='cu-bar bg-shadeBottom' v-text="item.enteName"></div>
         </div>
         <div class="cu-list menu menu-avatar">
           <div class="cu-item" style="padding-left:15rpx">
             <!-- <div class="cu-avatar round lg" style="background-image:url(https://image.weilanwl.com/img/square-4.jpg);"></div> -->
             <div class='content flex-sub'>
-              <div class='text-grey'>泉涌大大白菜</div>
+              <div class='text-grey' v-text="item.goodName"></div>
               <div class='text-gray text-sm flex justify-between'>
-                2018-08-19
+                {{item.createTime}}
                 <div class="text-gray text-sm">
-                  <text class="icon-attentionfill"></text> 10
-                  <text class="icon-appreciatefill"></text> 20
+                  <text class="icon-attentionfill" v-text="item.read"></text> 
+                  <text class="icon-appreciatefill" style="padding-left:10rpx" v-text="item.like"></text> 
                   <!-- <text class="icon-messagefill"></text> 30 -->
                 </div>
               </div>
@@ -71,13 +71,15 @@
         <div>大白菜</div>
       </div>
     </div> -->
-
+    <div v-if='toBottom' :class="['cu-load','text-sm',{'loading':isLoading},{'over':!isLoading}]"></div>
   </div>
 </template>
 
 <script>
 import app from "../../App";
-import {mapState,mapMutations} from 'vuex'
+import { getWeekDay, formatDate } from '../../config/functions'
+import {mapState,mapMutations} from 'vuex';
+import { imgBaseUrl } from '../../config/env'
 const datas = app.getSysInfo();
 export default {
   
@@ -111,14 +113,33 @@ export default {
     interval: 5000,
     duration: 1000,
     navBarHeight:0,
-    statusBarHeight:0
+    statusBarHeight:0,
+    imgBaseUrl:imgBaseUrl,
+    page:1,
+    pageSize:5,
+    isLoading:true,
+    toBottom:false,
+    floorstatus:false
     };
   },
 
   computed:{
     ...mapState([
-      'bannerList'
+      'bannerList',
+      'homeGoodList',
+      'homeGoodTotal',
+      'topGoodList'
     ])
+  },
+  onReachBottom(){
+    this.toBottom = true;
+    ++ this.page ;
+    let pageTotal = (Math.floor(Number(this.homeGoodTotal/this.pageSize)));
+    if(this.page<pageTotal){
+          this.getHomeGood();
+    }else{
+      this.isLoading = false;
+    }
   },
   created(){
     let platformReg = /ios/i;
@@ -139,7 +160,12 @@ export default {
 
  onLoad(){
    this.getBanner();
+   this.getHomeGood();
+   this.getTopGood()
  },
+ onPageScroll: function (e) {
+    this.floorstatus = e.scrollTop > 100?true:false;
+  },
 
   methods: {
     onChange(e) {
@@ -152,8 +178,9 @@ export default {
       console.log("clickHandle:", ev);
       // throw {message: 'custom test'}
     },
-    gotoDetails(){
-      const url = "../dishDetail/main";
+    gotoDetails(data){
+      let datas = JSON.stringify(data)
+      const url = "../dishDetail/main?data="+datas;
       mpvue.navigateTo({ url })
     },
     
@@ -170,8 +197,53 @@ export default {
       let data ={bannEnteUuid :user.enteUuid};
       this.$store.dispatch('getBanner',data) 
     },
+    getHomeGood(){
+      let user = wx.getStorageSync("loginInfo");
+      let NowDate =new Date();
+      let date1 = new Date(NowDate);
+        date1.setDate(NowDate.getDate()-100);
+      let date2 = new Date(NowDate);
+        date2.setDate(NowDate.getDate()-3);
+      let data = {
+        guarUuid  :user.suseUuid,
+        goodEnteUuid :user.enteUuid,
+        starTime : formatDate(date1),
+        endTime : formatDate(date2),
+        page:this.page,
+        pageSize:this.pageSize
+      };
+      this.$store.dispatch('getHomeGood',data)
+    },
+    getTopGood(){
+      let user = wx.getStorageSync("loginInfo");
+      let NowDate =new Date();
+      let date1 = new Date(NowDate);
+        date1.setDate(NowDate.getDate()-100);
+      let date2 = new Date(NowDate);
+        date2.setDate(NowDate.getDate()-3);
+      let data = {
+        guarUuid  :user.suseUuid,
+        goodEnteUuid :user.enteUuid,
+        starTime : formatDate(date1),
+        endTime : formatDate(date2),
+        page:this.page,
+        pageSize:10
+      };
+      this.$store.dispatch('getTopGood',data)
+    },
+    goTop(){
+      if (wx.pageScrollTo) {
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
+    }
   },
-
 };
 </script>
 
@@ -222,5 +294,15 @@ export default {
 .food_name{
   font-size: 28rpx;
   padding: 20rpx 15rpx; 
+}
+.goTop{
+  height: 80rpx;
+  width: 80rpx;
+  position: fixed;
+  bottom: 50rpx;
+  opacity: 0.9;
+  right: 30rpx;
+  border-radius: 50%;
+  z-index: 999
 }
 </style>
