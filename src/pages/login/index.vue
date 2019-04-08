@@ -84,7 +84,9 @@ export default {
         code:this.code,
       };
 
-      let res = await login(data);
+      let res = await login(data,()=>{
+        this.loadImg();
+      });
       this.logining = true;
       wx.setStorageSync('loginInfo',res.params)
       this.timer = setTimeout(() => {

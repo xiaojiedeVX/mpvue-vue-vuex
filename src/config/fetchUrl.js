@@ -16,5 +16,6 @@ export default {
     getRpCollectDet:"api/menu/search/des",
     getHomeGood:"api/home/goods/search",
     upDatePw:"api/personal/edit/password",
-    getGoodDet:"api/home/goods/des"
+    getGoodDet:"api/home/goods/des",
+    LikeGood:"api/home/goods/potlike"
 }

@@ -55,6 +55,7 @@
             <img
               :src="item&&imgBaseUrl + item.goodImage"
               alt
+              mode="aspectFill"
               style="width:80rpx;height:80rpx;border-radius:50%;margin:10rpx"
             >
             <div class="tilte">
@@ -68,6 +69,7 @@
               :src="item&&imgBaseUrl + item.goodImage"
               style="width:100%;height:360rpx;padding:10rpx"
               alt
+              mode="aspectFill"
             >
           </div>
           <div class="fl_right">

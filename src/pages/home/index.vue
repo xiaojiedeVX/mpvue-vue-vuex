@@ -55,7 +55,7 @@
                 {{item.createTime}}
                 <div class="text-gray text-sm">
                   <text class="icon-attentionfill" v-text="item.read"></text> 
-                  <text class="icon-appreciatefill" style="padding-left:10rpx" v-text="item.like"></text> 
+                  <text :class="['icon-appreciatefill',{'text-red':item.isLike==1}]" @click.stop="LikesClick(item)" style="padding-left:10rpx" v-text="item.like"></text> 
                   <!-- <text class="icon-messagefill"></text> 30 -->
                 </div>
               </div>
@@ -79,7 +79,8 @@
 import app from "../../App";
 import { getWeekDay, formatDate } from '../../config/functions'
 import {mapState,mapMutations} from 'vuex';
-import { imgBaseUrl } from '../../config/env'
+import { imgBaseUrl } from '../../config/env';
+import {  LikeGood } from '../../config/functions'
 const datas = app.getSysInfo();
 export default {
   
@@ -168,6 +169,9 @@ export default {
   },
 
   methods: {
+    ...mapMutations([
+      'GET_GOOD_DET'
+    ]),
     onChange(e) {
       const url = "../food/main";
       if (e.mp.detail == 1) {
@@ -236,12 +240,20 @@ export default {
       wx.pageScrollTo({
         scrollTop: 0
       })
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-      })
-    }
+      } else {
+        wx.showModal({
+          title: '提示',
+          content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+        })
+      }
+    },
+    async LikesClick(e){
+      let user = wx.getStorageSync('loginInfo');
+      let num = e.isLike==1?-1:1
+      let data = {glreGoodUuid :e.goodUuid,guarUuid:user.suseUuid,num : num};
+      let res =  await LikeGood(data);
+      let {homeGoodList} = this;
+      this.getHomeGood();
     }
   },
 };

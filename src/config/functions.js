@@ -93,9 +93,7 @@ const formatNumber = n => {
   
 
 
-
-
-export const login = (data)=> Request(fetchUrl.login,cvsData(data)) 
+export const login = (data,fnError)=> Request(fetchUrl.login,cvsData(data),'POST',fnError) 
 
 export const getImg = () => Request(fetchUrl.getImg,null,'GET')
 
@@ -128,3 +126,5 @@ export const getHomeGood = (data,page,pageSize) => Request(fetchUrl.getHomeGood,
 export const upDatePw = (data,fnError) => Request(fetchUrl.upDatePw,cvsData(data),'POST',fnError)
 
 export const getGoodDet = (data) => Request(fetchUrl.getGoodDet,cvsData(data))
+
+export const LikeGood = (data) => Request(fetchUrl.LikeGood,cvsData(data))

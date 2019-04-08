@@ -13,7 +13,7 @@ let imgBaseUrl = '';
 
 if (process.env.NODE_ENV == 'development') {
 	imgBaseUrl = 'http://www.quanyongshengxian.com/images/';
-	baseUrl = "http://192.168.0.111:8084/xzdplus/";
+	baseUrl = "http://192.168.0.106:8084/xzdplus/";
 
 }else if(process.env.NODE_ENV == 'production'){
 	baseUrl = 'http:www.quanyongshengxian.com';

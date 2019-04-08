@@ -92,6 +92,10 @@ export default {
     },
     async getGoodDet({commit},data){
         let res = await getGoodDet(data);
+        res.params.goodNutrlist&&res.params.goodNutrlist.forEach(item=>{
+            item.percent =Number(item.num);
+            item.a = '1'
+        });
         commit(GET_GOOD_DET,res)
     } 
 }
