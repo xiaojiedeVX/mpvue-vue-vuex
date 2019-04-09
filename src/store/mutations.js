@@ -51,6 +51,10 @@ export default{
         }      
     },
     [GET_FOOD_GOOD](state,action){
+        console.log(action)
+        if(!action.params){
+            state.foodGoodList = []
+        };
         state.foodGoodTotal = action.total||0
         if(action.page<=1){
             state.foodGoodList = action.params||[];

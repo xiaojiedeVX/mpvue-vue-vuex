@@ -12,7 +12,7 @@
       </div>
     </div>
     <div>
-      <img :src="imgBaseUrl + foodGoodDet.goodImage" alt="" mode="aspectFill"  style="width:100%;height:370rpx">
+      <img :src="foodGoodDet.goodImage?imgBaseUrl + foodGoodDet.goodImage:null" alt="" mode="aspectFill"  style="width:100%;height:370rpx">
     </div>
     <div style="background:white">
       <div class="wid_96 font_30">

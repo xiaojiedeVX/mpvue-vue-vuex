@@ -26,13 +26,22 @@ function Request(url='',data = {},method="POST",fnError){
 						if(url == fetchUrl.refLogin){
 							wx.clearStorageSync();
 							setTimeout(()=>{
-								const urls = "../login/main";
+								const urls = "/pages/login/main";
 								console.log('this');
 								console.log(mpvue)
 								mpvue.redirectTo({url:urls})
 							},500)
 						}
 						break;
+					case '401':
+						showMessage(res.data.error);
+						wx.clearStorageSync();
+						setTimeout(()=>{
+							const urls = "/pages/login/main";
+							console.log('this');
+							console.log(mpvue)
+							mpvue.redirectTo({url:urls})
+						},500)
 				}
 			},
 			fail: function (res) {

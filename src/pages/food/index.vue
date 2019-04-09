@@ -13,7 +13,7 @@
         <!-- <div class="cu-avatar round" style="background-image:url(https://image.weilanwl.com/img/square-1.jpg);"></div> -->
         <div class="search-form radius">
           <text class="icon-search"></text>
-          <input type="text" placeholder="搜索食材,菜譜" confirm-type="search">
+          <input type="text" v-model="schKey"  @confirm="searchFood($event)" placeholder="搜索食材,菜譜" confirm-type="search">
         </div>
         <div class="action" @click.stop="showModal">
           <text>{{nowDay}} 星期{{weekDay}}</text>
@@ -47,7 +47,7 @@
       <div
         v-for="(item,index) in foodGoodList"
         :key="index"
-        @click="gotoDetail"
+        @click="gotoDetail(item)"
         style="margin-bottom:30rpx"
       >
         <div class="content_my">
@@ -114,7 +114,8 @@ export default {
       toBottom: false,
       floorstatus: false,
       startTime:null,
-      enTime:null
+      enTime:null,
+      schKey:''
     };
   },
 
@@ -153,6 +154,7 @@ export default {
       this.enTime = formatDate(date2);
       this.getFood();
   },
+
 
   onReachBottom() {
     this.toBottom = true;
@@ -205,9 +207,10 @@ export default {
     showModal() {
       this.modaShow = true;
     },
-    gotoDetail() {
-      const url = "../dishDetail/main";
-      mpvue.navigateTo({ url });
+    gotoDetail(data) {
+      let datas = JSON.stringify(data)
+      const url = "../dishDetail/main?data="+datas;
+      mpvue.navigateTo({ url })
     },
     getFood() {
       let user = wx.getStorageSync("loginInfo");
@@ -221,17 +224,30 @@ export default {
       };
       this.$store.dispatch("getFoodGood", data);
     },
-     goTop(){
+    goTop(){
       if (wx.pageScrollTo) {
         wx.pageScrollTo({
           scrollTop: 0
         })
       } else {
-      wx.showModal({
-        title: '提示',
-        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-      })
-    }
+        wx.showModal({
+          title: '提示',
+          content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+        })
+      }
+    },
+    searchFood(e){
+      console.log(e)
+      this.page = 1;
+      let user = wx.getStorageSync('loginInfo');
+      let data = {
+        goodName :this.schKey,
+        guarUuid :user.suseUuid,
+        goodEnteUuid :user.enteUuid,
+        page: this.page,
+        pageSize: this.pageSize
+      };
+       this.$store.dispatch("getFoodGood", data);
     }
   }
 };

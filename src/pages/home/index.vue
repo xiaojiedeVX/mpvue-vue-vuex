@@ -253,7 +253,13 @@ export default {
       let data = {glreGoodUuid :e.goodUuid,guarUuid:user.suseUuid,num : num};
       let res =  await LikeGood(data);
       let {homeGoodList} = this;
-      this.getHomeGood();
+      homeGoodList.forEach(item=>{
+        if(item.goodUuid==e.goodUuid){
+          item.isLike = e.isLike==1?0:1;
+          item.like = e.isLike==1?++item.like:--item.like;
+        }
+      });
+      this.homeGoodList = homeGoodList
     }
   },
 };
