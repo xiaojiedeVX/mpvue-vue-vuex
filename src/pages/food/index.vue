@@ -158,9 +158,9 @@ export default {
 
   onReachBottom() {
     this.toBottom = true;
-    ++this.page;
-    let pageTotal = Math.floor(Number(this.foodGoodTotal / this.pageSize));
+    let pageTotal = Math.ceil(Number(this.foodGoodTotal / this.pageSize));
     if (this.page < pageTotal) {
+      ++this.page;
       this.getFood();
     } else {
       this.isLoading = false;

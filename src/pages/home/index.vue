@@ -152,7 +152,6 @@ export default {
     }
     this.navBarHeight = datas.statusBarHeight + height;
     this.statusBarHeight = datas.statusBarHeight
-    this.towerSwiper(this.foodUrls);
   },
 
   beforeCreate() {
